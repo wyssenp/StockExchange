@@ -17,8 +17,6 @@ public class MainActivity extends ActionBarActivity {
     private Button stockManagement;
     private Context ctx;
 
-    //this is a random comment to test GitHub
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
