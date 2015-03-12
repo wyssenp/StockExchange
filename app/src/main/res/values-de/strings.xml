@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Stock Exchange</string>
+    <string name="action_buyStocks">Aktien kaufen</string>
+    <string name="action_settings">Einstellungen</string>
+    <string name="main_myPortfolio">Mein Portfolio</string>
+    <string name="main_stockExchange">Börsenhandel</string>
+    <string name="main_stockMgmt">Aktienverwaltung</string>
+    <string name="sd_graph">Grafik</string>
+    <string name="sd_tab_buy">Kaufen</string>
+    <string name="sd_value">Kurs</string>
+    <string name="se_markets">Markt auswählen:</string>
+    <string name="se_stocks">Verfügbare Aktien:</string>
+    <string name="title_activity_my_portfolio">Mein Portfolio</string>
+    <string name="title_activity_stock_details">Aktie: Details</string>
+    <string name="title_activity_stock_exchange">Börsenhandel</string>
+    <string name="ms_stock_symbol">Symbol</string>
+    <string name="ms_stock_sector">Branche</string>
+    <string name="title_activity_stock_management">Aktienmanagement</string>
+    <string name="title_activity_manage_stock">Aktie Hinzufügen</string>
+    <string name="sm_add_stock">Aktie Hinzufügen</string>
+    <string name="ms_stock_btn_add">Aktie Hinzufügen</string>
+</resources>

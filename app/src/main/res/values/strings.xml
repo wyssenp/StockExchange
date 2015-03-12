@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Stock Exchange</string>
+    <string name="title_activity_my_portfolio">My Portfolio</string>
+    <string name="title_activity_stock_exchange">Stock Exchange</string>
+    <string name="title_activity_stock_management">Stock Management</string>
+    <string name="title_activity_manage_stock">Add Stock</string>
+    <string name="action_settings">Settings</string>
+    <string name="action_buyStocks">Buy stocks</string>
+    <string name="main_myPortfolio">My portfolio</string>
+    <string name="main_stockExchange">Stock exchange</string>
+    <string name="main_stockMgmt">Stock management</string>
+    <string name="se_markets">Select market:</string>
+    <string name="se_stocks">Available stocks:</string>
+    <string name="title_activity_stock_details">Stock Details</string>
+    <string name="sd_tab_details" translatable="false">Details</string>
+    <string name="sd_tab_buy">Buy</string>
+    <string name="sd_name" translatable="false">Name</string>
+    <string name="sd_value">Value</string>
+    <string name="sd_graph">Graph</string>
+    <string name="sm_add_stock">Add stock</string>
+    <string name="ms_stock_symbol">Symbol</string>
+    <string name="ms_stock_sector">Sector</string>
+    <string name="ms_stock_btn_add">Add stock</string>
+
+    <string-array name="array_markets">
+        <item>All</item>
+        <item>Swiss market</item>
+        <item>German market</item>
+    </string-array>
+
+    <string-array name="sm_array_markets">
+        <item>Swiss market</item>
+        <item>German market</item>
+    </string-array>
+
+    <string-array name="array_stocks">
+        <item>Novartis 600</item>
+        <item>Swisscom</item>
+        <item>CS Group</item>
+        <item>Roche Hldg</item>
+        <item>Zurich Insur Grp</item>
+        <item>Julius Baer Grp</item>
+        <item>ABB</item>
+        <item>Adecco</item>
+        <item>Nestle</item>
+        <item>Syngenta</item>
+        <item>Swiss Re</item>
+    </string-array>
+
+    <string-array name="array_brokers">
+        <item>ZKB</item>
+    </string-array>
+
+    <!-- Testing purposes only -->
+    <string-array name="myStocks_name">
+        <item>Swisscom</item>
+        <item>ABB</item>
+        <item>Adecco</item>
+    </string-array>
+
+    <string-array name="myStocks_number">
+        <item>50</item>
+        <item>10</item>
+        <item>200</item>
+    </string-array>
+
+
+</resources>
