@@ -51,6 +51,11 @@ public class DatabaseUtility extends SQLiteOpenHelper {
             "FOREIGN KEY(Broker) REFERENCES " + TABLE_BROKER + "(brokerId),"+
             "FOREIGN KEY(Market) REFERENCES " + TABLE_STOCKMARKET + "(stockMarketId));";
 
+    private static final String TABLE_STOCKMARKET_INSERT = "INSERT INTO " + TABLE_STOCKMARKET  + "(Symbol, Name, Currency) "+
+            "VALUES('SIX','SIX Swiss Exchange','CHF');"+
+            "INSERT INTO " + TABLE_STOCKMARKET  + "(Symbol, Name, Currency) "+
+            "VALUES('DBAG','Deutsche Börse AG','EUR');";
+
 
     public DatabaseUtility(Context context) {
         super(context, DB_PATH + DATABASE_NAME, null, DATABASE_VERSION);
@@ -62,6 +67,7 @@ public class DatabaseUtility extends SQLiteOpenHelper {
         db.execSQL(TABLE_STOCK_CREATE);
         db.execSQL(TABLE_BROKER_CREATE);
         db.execSQL(TABLE_PORTFOLIO_CREATE);
+        db.execSQL(TABLE_STOCKMARKET_INSERT);
     }
 
     @Override

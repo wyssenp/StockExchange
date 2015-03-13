@@ -24,6 +24,8 @@
     <string name="ms_stock_sector">Sector</string>
     <string name="ms_stock_btn_add">Add stock</string>
 
+    <string name="toast_stockCreated">Stock successfully created!</string>
+
     <string-array name="array_markets">
         <item>All</item>
         <item>Swiss market</item>
