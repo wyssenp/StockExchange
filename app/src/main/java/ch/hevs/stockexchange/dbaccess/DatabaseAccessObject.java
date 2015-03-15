@@ -38,11 +38,11 @@ public abstract class DatabaseAccessObject {
 
     public static void writeStock(String symbol, String name, String sector, double value, int market) {
         ContentValues values = new ContentValues();
-        values.put("symbol",symbol);
-        values.put("name",name);
-        values.put("sector",sector);
-        values.put("value",value);
-        values.put("market",market);
+        values.put("Symbol",symbol);
+        values.put("Name",name);
+        values.put("Sector",sector);
+        values.put("StockValue",value);
+        values.put("StockMarket",market);
         database.insert("Stock", null, values);
     }
 }

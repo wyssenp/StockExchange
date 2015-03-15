@@ -14,7 +14,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class DatabaseUtility extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "StockExchange.db";
-    private static final String DB_PATH = "/mnt/sdcard/" ;
+    private static final String DB_PATH = "/mnt/sdcard/";
     private static final int DATABASE_VERSION = 1;
     private static final String TABLE_STOCK = "Stock";
     private static final String TABLE_BROKER = "Broker";
@@ -58,7 +58,7 @@ public class DatabaseUtility extends SQLiteOpenHelper {
 
 
     public DatabaseUtility(Context context) {
-        super(context, DB_PATH + DATABASE_NAME, null, DATABASE_VERSION);
+        super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
     @Override
