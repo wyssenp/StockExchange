@@ -14,7 +14,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class DatabaseUtility extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "StockExchange.db";
-    private static final String DB_PATH = "/mnt/sdcard/";
+    //private static final String DB_PATH = "/mnt/sdcard/";
     private static final int DATABASE_VERSION = 1;
     private static final String TABLE_STOCK = "Stock";
     private static final String TABLE_BROKER = "Broker";
@@ -51,9 +51,10 @@ public class DatabaseUtility extends SQLiteOpenHelper {
             "FOREIGN KEY(Broker) REFERENCES " + TABLE_BROKER + "(brokerId),"+
             "FOREIGN KEY(Market) REFERENCES " + TABLE_STOCKMARKET + "(stockMarketId));";
 
-    private static final String TABLE_STOCKMARKET_INSERT = "INSERT INTO " + TABLE_STOCKMARKET  + "(Symbol, Name, Currency) "+
-            "VALUES('SIX','SIX Swiss Exchange','CHF');"+
-            "INSERT INTO " + TABLE_STOCKMARKET  + "(Symbol, Name, Currency) "+
+    private static final String TABLE_STOCKMARKET_INSERT_1 = "INSERT INTO " + TABLE_STOCKMARKET  + "(Symbol, Name, Currency) "+
+            "VALUES('SIX','SIX Swiss Exchange','CHF');";
+
+    private static final String TABLE_STOCKMARKET_INSERT_2 = "INSERT INTO " + TABLE_STOCKMARKET  + "(Symbol, Name, Currency) "+
             "VALUES('DBAG','Deutsche Börse AG','EUR');";
 
 
@@ -67,7 +68,8 @@ public class DatabaseUtility extends SQLiteOpenHelper {
         db.execSQL(TABLE_STOCK_CREATE);
         db.execSQL(TABLE_BROKER_CREATE);
         db.execSQL(TABLE_PORTFOLIO_CREATE);
-        db.execSQL(TABLE_STOCKMARKET_INSERT);
+        db.execSQL(TABLE_STOCKMARKET_INSERT_1);
+        db.execSQL(TABLE_STOCKMARKET_INSERT_2);
     }
 
     @Override

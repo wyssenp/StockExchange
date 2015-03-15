@@ -14,6 +14,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import ch.hevs.stockexchange.dbaccess.DatabaseAccessObject;
+import ch.hevs.stockexchange.dbaccess.DatabaseUtility;
 
 
 public class ManageStockActivity extends ActionBarActivity {
