@@ -32,7 +32,9 @@ public class ManageStockActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_manage_stock);
 
-        DatabaseAccessObject.open(ManageStockActivity.this);
+        ctx = getApplicationContext();
+
+        DatabaseAccessObject.open(ctx);
 
         spinner_markets = (Spinner) findViewById(R.id.spinner_markets);
 
@@ -47,7 +49,6 @@ public class ManageStockActivity extends ActionBarActivity {
         editTextValue = (EditText) findViewById(R.id.editTextValue);
 
         addStock = (Button) findViewById(R.id.btn_addStock);
-        ctx = getApplicationContext();
 
         addStock.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -2,6 +2,7 @@ package ch.hevs.stockexchange.dbaccess;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
@@ -34,6 +35,12 @@ public abstract class DatabaseAccessObject {
     public static void close()
     {
         helper.close();
+    }
+
+    public static Cursor getStocks() {
+        String sql = "SELECT stockId AS _id, Name FROM Stock";	//AS _id necessary for the SimpleCursorAdapter
+
+        return database.rawQuery(sql, null);
     }
 
     public static void writeStock(String symbol, String name, String sector, double value, int market) {
