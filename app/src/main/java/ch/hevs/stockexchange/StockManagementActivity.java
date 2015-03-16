@@ -7,30 +7,36 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.SimpleCursorAdapter;
+
+import java.util.List;
 
 import ch.hevs.stockexchange.dbaccess.DatabaseAccessObject;
+import ch.hevs.stockexchange.model.Stock;
 
 
 public class StockManagementActivity extends ActionBarActivity {
 
     private ListView listViewStocks;
-    private Context ctx;
+    private DatabaseAccessObject datasource;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stock_management);
 
-        ctx = getApplicationContext();
+        datasource = new DatabaseAccessObject(this);
+        datasource.open();
+
         listViewStocks = (ListView) findViewById(R.id.listView);
 
-        DatabaseAccessObject.open(ctx);
-        Cursor stocks = DatabaseAccessObject.getStocks();
+        List<Stock> stocks = datasource.getStocks();
 
-
+        ArrayAdapter<Stock> adapter = new ArrayAdapter<>(this,android.R.layout.simple_list_item_1,stocks);
+        listViewStocks.setAdapter(adapter);
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

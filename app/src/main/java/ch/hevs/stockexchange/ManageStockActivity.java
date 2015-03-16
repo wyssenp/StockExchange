@@ -25,16 +25,16 @@ public class ManageStockActivity extends ActionBarActivity {
     private EditText editTextSector;
     private EditText editTextValue;
     private Button addStock;
-    private Context ctx;
+    private DatabaseAccessObject datasource;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_manage_stock);
 
-        ctx = getApplicationContext();
+        datasource = new DatabaseAccessObject(this);
 
-        DatabaseAccessObject.open(ctx);
+        datasource.open();
 
         spinner_markets = (Spinner) findViewById(R.id.spinner_markets);
 
@@ -54,12 +54,12 @@ public class ManageStockActivity extends ActionBarActivity {
             @Override
             public void onClick(View v) {
 
-                DatabaseAccessObject.writeStock(editTextSymbol.getText().toString(),
+                datasource.writeStock(editTextSymbol.getText().toString(),
                         editTextName.getText().toString(),
                         editTextSector.getText().toString(),
                         Double.parseDouble(editTextValue.getText().toString()),
                         spinner_markets.getSelectedItemPosition()+1);
-                DatabaseAccessObject.close();
+                datasource.close();
 
                 Toast.makeText(ManageStockActivity.this,R.string.toast_stockCreated,Toast.LENGTH_SHORT).show();
 

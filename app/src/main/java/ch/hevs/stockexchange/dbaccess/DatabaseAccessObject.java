@@ -6,6 +6,12 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import ch.hevs.stockexchange.model.Market;
+import ch.hevs.stockexchange.model.Stock;
+
 /**
  * Created by Pierre-Alain Wyssen on 12.03.2015.
  * Project: StockExchange
@@ -13,37 +19,81 @@ import android.database.sqlite.SQLiteOpenHelper;
  * Description:
  * Class to access the android database
  */
-public abstract class DatabaseAccessObject {
+public class DatabaseAccessObject {
 
-    private static SQLiteDatabase database;
-    private static SQLiteOpenHelper helper;
+    private SQLiteDatabase database;
+    private SQLiteOpenHelper helper;
+    private String[] stock_allColumns = {"stockId","Symbol","Name","Sector","StockMarket","StockValue"};
+    private String[] market_allColumns = {"stockMarketId","Symbol","Name","Currency"};
+
+    public DatabaseAccessObject(Context context) {
+        helper = new DatabaseUtility(context);
+    }
 
     /**
      * Open the database
-     * @param context
-     * The context in which running
      */
-    public static void open(Context context)
+    public void open()
     {
-        helper = new DatabaseUtility(context);
         database = helper.getWritableDatabase();
     }
 
     /**
      * Close the database
      */
-    public static void close()
+    public void close()
     {
         helper.close();
     }
 
-    public static Cursor getStocks() {
-        String sql = "SELECT stockId AS _id, Name FROM Stock";	//AS _id necessary for the SimpleCursorAdapter
+    public Market getMarketById(long id) {
+        Market result;
 
-        return database.rawQuery(sql, null);
+        Cursor cursor = database.query(DatabaseUtility.TABLE_STOCKMARKET,market_allColumns,"stockMarketId = " + id,
+                null, null, null, null);
+        cursor.moveToFirst();
+        result = cursorToMarket(cursor);
+        cursor.close();
+        return result;
     }
 
-    public static void writeStock(String symbol, String name, String sector, double value, int market) {
+    public List<Stock> getStocks() {
+        List<Stock> stocks = new ArrayList<>();
+
+        Cursor cursor = database.query(DatabaseUtility.TABLE_STOCK, stock_allColumns, null, null, null, null, "Name");
+
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()) {
+            Stock stock = cursorToStock(cursor);
+            stocks.add(stock);
+            cursor.moveToNext();
+        }
+        cursor.close();
+
+        return stocks;
+    }
+
+    private Stock cursorToStock(Cursor cursor) {
+        Stock stock = new Stock();
+        stock.setId(cursor.getLong(0));
+        stock.setSymbol(cursor.getString(1));
+        stock.setName(cursor.getString(2));
+        stock.setSector(cursor.getString(3));
+        //stock.setMarket();
+        stock.setValue(cursor.getDouble(5));
+        return stock;
+    }
+
+    private Market cursorToMarket(Cursor cursor) {
+        Market market = new Market();
+        market.setId(cursor.getLong(0));
+        market.setSymbol(cursor.getString(1));
+        market.setName(cursor.getString(2));
+        market.setCurrency(cursor.getString(3));
+        return market;
+    }
+
+    public void writeStock(String symbol, String name, String sector, double value, int market) {
         ContentValues values = new ContentValues();
         values.put("Symbol",symbol);
         values.put("Name",name);

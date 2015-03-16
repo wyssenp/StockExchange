@@ -16,10 +16,10 @@ public class DatabaseUtility extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "StockExchange.db";
     //private static final String DB_PATH = "/mnt/sdcard/";
     private static final int DATABASE_VERSION = 1;
-    private static final String TABLE_STOCK = "Stock";
-    private static final String TABLE_BROKER = "Broker";
-    private static final String TABLE_STOCKMARKET = "Stockmarket";
-    private static final String TABLE_PORTFOLIO = "Portfolio";
+    protected static final String TABLE_STOCK = "Stock";
+    protected static final String TABLE_BROKER = "Broker";
+    protected static final String TABLE_STOCKMARKET = "Stockmarket";
+    protected static final String TABLE_PORTFOLIO = "Portfolio";
 
     private static final String TABLE_STOCKMARKET_CREATE = "CREATE TABLE IF NOT EXISTS " + TABLE_STOCKMARKET +
             "(stockMarketId INTEGER PRIMARY KEY NOT NULL,"+
