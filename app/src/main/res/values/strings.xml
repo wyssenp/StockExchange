@@ -25,6 +25,7 @@
     <string name="ms_stock_btn_add">Add stock</string>
 
     <string name="toast_stockCreated">Stock successfully created!</string>
+    <string name="toast_fieldsEmpty">All text fields must contain a value in order to continue.</string>
 
     <string-array name="array_markets">
         <item>All</item>

@@ -53,6 +53,12 @@ public class ManageStockActivity extends ActionBarActivity {
         addStock.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //If any of the text fields are empty, the user is informed
+                if(isEmpty(editTextSymbol)||isEmpty(editTextName)||
+                        isEmpty(editTextSector)||isEmpty(editTextValue)) {
+                    Toast.makeText(ManageStockActivity.this,R.string.toast_fieldsEmpty,Toast.LENGTH_SHORT).show();
+                    return;
+                }
 
                 datasource.writeStock(editTextSymbol.getText().toString(),
                         editTextName.getText().toString(),
@@ -63,13 +69,20 @@ public class ManageStockActivity extends ActionBarActivity {
 
                 Toast.makeText(ManageStockActivity.this,R.string.toast_stockCreated,Toast.LENGTH_SHORT).show();
 
+                //Return to the calling activity
                 finish();
-                //Intent i = new Intent(ctx, StockManagementActivity.class);
-                //startActivity(i);
             }
         });
     }
 
+    /**
+     * Check if a text field (EditText) is empty
+     * @param editText The EditText object
+     * @return false if it's not empty, true if it's empty
+     */
+    private boolean isEmpty(EditText editText) {
+        return editText.getText().toString().trim().length() == 0;
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
