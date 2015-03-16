@@ -21,6 +21,7 @@ public class StockManagementActivity extends ActionBarActivity {
 
     private ListView listViewStocks;
     private DatabaseAccessObject datasource;
+    private ArrayAdapter<Stock> adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,8 +35,15 @@ public class StockManagementActivity extends ActionBarActivity {
 
         List<Stock> stocks = datasource.getStocks();
 
-        ArrayAdapter<Stock> adapter = new ArrayAdapter<>(this,android.R.layout.simple_list_item_1,stocks);
+        adapter = new ArrayAdapter<>(this,android.R.layout.simple_list_item_1,stocks);
         listViewStocks.setAdapter(adapter);
+    }
+
+    //TODO Refresh ListView!
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        //listViewStocks.refreshDrawableState();
     }
 
     @Override

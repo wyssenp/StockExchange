@@ -66,9 +66,8 @@ public class Stock {
 
     @Override
     public String toString() {
-        return "Stock{" +
+        return "{" + id + "} " +
                 "name='" + name + '\'' +
-                ", value=" + value +
-                '}';
+                ", value=" + value;
     }
 }
