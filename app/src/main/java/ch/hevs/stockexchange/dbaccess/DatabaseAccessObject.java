@@ -46,6 +46,17 @@ public class DatabaseAccessObject {
         helper.close();
     }
 
+    public Stock getStockById(long id) {
+        Stock result;
+
+        Cursor cursor = database.query(DatabaseUtility.TABLE_STOCK,stock_allColumns,"stockId = " + id,
+                null, null, null, null);
+        cursor.moveToFirst();
+        result = cursorToStock(cursor);
+        cursor.close();
+        return result;
+    }
+
     public Market getMarketById(long id) {
         Market result;
 
@@ -57,10 +68,16 @@ public class DatabaseAccessObject {
         return result;
     }
 
+    public void deleteStock(int stockId) {
+        String query = "DELETE FROM " + DatabaseUtility.TABLE_STOCK + " WHERE stockId = " + stockId;
+
+        database.execSQL(query);
+    }
+
     public List<Stock> getStocks() {
         List<Stock> stocks = new ArrayList<>();
 
-        Cursor cursor = database.query(DatabaseUtility.TABLE_STOCK, stock_allColumns, null, null, null, null, "Name");
+        Cursor cursor = database.query(DatabaseUtility.TABLE_STOCK, stock_allColumns, null, null, null, null, "stockId");
 
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
@@ -79,7 +96,7 @@ public class DatabaseAccessObject {
         stock.setSymbol(cursor.getString(1));
         stock.setName(cursor.getString(2));
         stock.setSector(cursor.getString(3));
-        //stock.setMarket();
+        stock.setMarket(getMarketById(cursor.getLong(4)));
         stock.setValue(cursor.getDouble(5));
         return stock;
     }

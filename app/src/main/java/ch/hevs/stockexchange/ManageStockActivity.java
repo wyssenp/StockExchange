@@ -64,7 +64,7 @@ public class ManageStockActivity extends ActionBarActivity {
                         editTextName.getText().toString(),
                         editTextSector.getText().toString(),
                         Double.parseDouble(editTextValue.getText().toString()),
-                        spinner_markets.getSelectedItemPosition()+1);
+                        spinner_markets.getSelectedItemPosition()+1); //Swiss market = 0, German market = 1
                 datasource.close();
 
                 Toast.makeText(ManageStockActivity.this,R.string.toast_stockCreated,Toast.LENGTH_SHORT).show();

@@ -1,12 +1,17 @@
 package ch.hevs.stockexchange;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
@@ -27,23 +32,39 @@ public class StockManagementActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stock_management);
-
-        datasource = new DatabaseAccessObject(this);
-        datasource.open();
-
-        listViewStocks = (ListView) findViewById(R.id.listView);
-
-        List<Stock> stocks = datasource.getStocks();
-
-        adapter = new ArrayAdapter<>(this,android.R.layout.simple_list_item_1,stocks);
-        listViewStocks.setAdapter(adapter);
     }
 
-    //TODO Refresh ListView!
+    /**
+     * <p>When the user clicks on a stock a dialog shows where he can choose whether he
+     * wants to edit or delete a stock. He can also cancel the action.</p>
+     * <p>The options to choose from are:</p>
+     * <ul>
+     * <li>Index 0 = Edit</li>
+     * <li>Index 1 = Delete</li>
+     * <li>Index 2 = Cancel</li>
+     * </ul>
+     * @author Pierre-Alain Wyssen
+     */
+    private void createChooseDialog() {
+        DialogInterface.OnClickListener clickListener = new MyClickListener();
+
+        AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+        dialog.setTitle(R.string.sm_dialog_chooseAction);
+        dialog.setCancelable(true);
+        dialog.setItems(R.array.sm_dialog_choices, clickListener);
+        dialog.show();
+
+    }
+
+    /**
+     * This method as called after onCreate
+     * It's also used to "refresh" the list when a new stock has been added
+     * @author Pierre-Alain Wyssen
+     */
     @Override
-    protected void onRestart() {
-        super.onRestart();
-        //listViewStocks.refreshDrawableState();
+    protected void onResume() {
+        super.onResume();
+        initializeList();
     }
 
     @Override
@@ -71,5 +92,66 @@ public class StockManagementActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void removeStock(int stockId) {
+        datasource.deleteStock(stockId);
+
+        initializeList();
+    }
+
+    private void initializeList() {
+        datasource = new DatabaseAccessObject(this);
+        datasource.open();
+
+        listViewStocks = (ListView) findViewById(R.id.listView);
+
+        List<Stock> stocks = datasource.getStocks();
+
+        adapter = new ArrayAdapter<>(this,android.R.layout.simple_list_item_1,stocks);
+        listViewStocks.setAdapter(adapter);
+
+        //Click: just for testing, will have no functionality in the final build
+        listViewStocks.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Log.d("Selected item", "position="+position+"; id="+id);
+            }
+        });
+
+        //LongClick: will show a menu to edit or delete a stock
+        listViewStocks.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                createChooseDialog();
+                return false;
+            }
+        });
+    }
+
+    /**
+     * Custom click listener for the dialog that shows when the user performs a long click on a stock
+     * @author Pierre-Alain Wyssen
+     */
+    private class MyClickListener implements DialogInterface.OnClickListener {
+        @Override
+        public void onClick(DialogInterface dialog, int which) {
+            switch(which) {
+                case 0: //Edit
+                    //Open ManageStockActivity with the corresponding data
+                    Intent i = new Intent(StockManagementActivity.this,ManageStockActivity.class);
+                    i.putExtra("stockId",5); //TODO Put the correct stockId
+                    startActivity(i);
+                    break;
+                case 1: //Delete
+                    //Remove stock from the database
+                    //TODO Not correct at the moment. Needs method getStockId(int position)
+                    removeStock(which);
+                    break;
+                case 2: //Cancel
+                    dialog.dismiss();
+                    break;
+            }
+        }
     }
 }
