@@ -45,4 +45,14 @@ public class Market {
     public void setCurrency(String currency) {
         this.currency = currency;
     }
+
+    @Override
+    public String toString() {
+        return "Market{" +
+                "id=" + id +
+                ", symbol='" + symbol + '\'' +
+                ", name='" + name + '\'' +
+                ", currency='" + currency + '\'' +
+                '}';
+    }
 }

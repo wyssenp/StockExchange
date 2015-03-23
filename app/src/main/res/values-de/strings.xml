@@ -1,23 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <string name="app_name">Stock Exchange</string>
-    <string name="action_buyStocks">Aktien kaufen</string>
+    <string name="title_activity_my_portfolio">Mein Portfolio</string>
+    <string name="title_activity_stock_exchange">Börsenhandel</string>
+    <string name="title_activity_stock_management">Aktienmanagement</string>
+    <string name="title_activity_manage_stock">Aktie Hinzufügen</string>
+    <string name="title_activity_manage_stock_update">Aktie aktualisieren</string>
+    <string name="title_activity_stock_details">Aktie: Details</string>
+
     <string name="action_settings">Einstellungen</string>
+    <string name="action_buyStocks">Aktien kaufen</string>
+
     <string name="main_myPortfolio">Mein Portfolio</string>
     <string name="main_stockExchange">Börsenhandel</string>
     <string name="main_stockMgmt">Aktienverwaltung</string>
-    <string name="sd_graph">Grafik</string>
-    <string name="sd_tab_buy">Kaufen</string>
-    <string name="sd_value">Kurs</string>
+
     <string name="se_markets">Markt auswählen:</string>
     <string name="se_stocks">Verfügbare Aktien:</string>
-    <string name="title_activity_my_portfolio">Mein Portfolio</string>
-    <string name="title_activity_stock_details">Aktie: Details</string>
-    <string name="title_activity_stock_exchange">Börsenhandel</string>
+
+
+
+    <string name="sd_sector">Branche</string>
+    <string name="sd_value">Kurs</string>
+    <string name="sd_graph">Grafik</string>
+    <string name="sd_title_buy">%1$s-Aktien kaufen</string>
+    <string name="sd_select_nbr">Anzahl Aktien:</string>
+    <string name="sd_button_buy">Kaufen</string>
+
+    <string name="sm_add_stock">Aktie hinzufügen</string>
+    <string name="sm_update_stock">Aktie aktualisieren</string>
     <string name="ms_stock_symbol">Symbol</string>
     <string name="ms_stock_sector">Branche</string>
-    <string name="title_activity_stock_management">Aktienmanagement</string>
-    <string name="title_activity_manage_stock">Aktie Hinzufügen</string>
-    <string name="sm_add_stock">Aktie Hinzufügen</string>
     <string name="ms_stock_btn_add">Aktie Hinzufügen</string>
+
+    <string name="toast_stockCreated">Aktie wurde erfolgreich hinzugefügt!</string>
+    <string name="toast_stockUpdated">Aktie wurde erfolgreich geändert!</string>
+    <string name="toast_fieldsEmpty">Alle Felder müssen ausgefüllt sein.</string>
+
+    <string name="sm_dialog_chooseAction">Wählen Sie eine Aktion:</string>
+    <string-array name="sm_dialog_choices">
+        <item>Verändern</item>
+        <item>Löschen</item>
+        <item>Abbrechen</item>
+    </string-array>
+
+    <string-array name="array_markets">
+        <item>Alle</item>
+        <item>Schweizer Markt</item>
+        <item>Deutscher Markt</item>
+    </string-array>
+
+    <string-array name="sm_array_markets">
+        <item>Schweizer Markt</item>
+        <item>Deutscher Markt</item>
+    </string-array>
+
+
 </resources>

@@ -90,6 +90,25 @@ public class DatabaseAccessObject {
         return stocks;
     }
 
+    public List<Stock> getStocksWithMarket(int marketId) {
+        List<Stock> stocks = new ArrayList<>();
+
+        String selection = "StockMarket LIKE ?";
+        String[] selectionArgs = { String.valueOf(marketId) };
+
+        Cursor cursor = database.query(DatabaseUtility.TABLE_STOCK,stock_allColumns,selection,selectionArgs,null,null,"stockId");
+
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()) {
+            Stock stock = cursorToStock(cursor);
+            stocks.add(stock);
+            cursor.moveToNext();
+        }
+        cursor.close();
+
+        return stocks;
+    }
+
     private Stock cursorToStock(Cursor cursor) {
         Stock stock = new Stock();
         stock.setId(cursor.getLong(0));

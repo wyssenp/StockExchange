@@ -66,8 +66,7 @@ public class Stock {
 
     @Override
     public String toString() {
-        return "{" + id + "} " +
-                "name='" + name + '\'' +
-                ", value=" + value;
+        //TODO Add currency
+        return name + " (" + value + ")";
     }
 }
