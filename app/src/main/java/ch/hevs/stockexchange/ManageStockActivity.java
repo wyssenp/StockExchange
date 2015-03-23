@@ -73,6 +73,10 @@ public class ManageStockActivity extends ActionBarActivity {
         }
     }
 
+    /**
+     * This inner class is used when the user creates a new stock
+     * @author Pierre-Alain Wyssen
+     */
     private class NewStockListener implements View.OnClickListener {
         @Override
         public void onClick(View v) {
@@ -92,16 +96,37 @@ public class ManageStockActivity extends ActionBarActivity {
         }
     }
 
+    /**
+     * This inner class is used when the user updates a stock
+     * @author Pierre-Alain Wyssen
+     */
     private class UpdateStockListener implements View.OnClickListener {
         @Override
         public void onClick(View v) {
             checkFields();
 
             //Update database
+            datasource.updateStock(stockId,
+                    editTextSymbol.getText().toString(),
+                    editTextName.getText().toString(),
+                    editTextSector.getText().toString(),
+                    Double.parseDouble(editTextValue.getText().toString()),
+                    spinner_markets.getSelectedItemPosition()+1); //Swiss market = 0, German market = 1
+
+            datasource.close();
+
+            Toast.makeText(ManageStockActivity.this,R.string.toast_stockUpdated,Toast.LENGTH_SHORT).show();
+
+            //Return to the calling activity
+            finish();
 
         }
     }
 
+    /**
+     * Helper method that makes sure that all fields (EditText) are filled
+     * @author Pierre-Alain Wyssen
+     */
     private void checkFields() {
         //If any of the text fields are empty, the user is informed
         if(isEmpty(editTextSymbol)||isEmpty(editTextName)||
@@ -115,6 +140,7 @@ public class ManageStockActivity extends ActionBarActivity {
      * Check if a text field (EditText) is empty
      * @param editText The EditText object
      * @return false if it's not empty, true if it's empty
+     * @author Pierre-Alain Wyssen
      */
     private boolean isEmpty(EditText editText) {
         return editText.getText().toString().trim().length() == 0;

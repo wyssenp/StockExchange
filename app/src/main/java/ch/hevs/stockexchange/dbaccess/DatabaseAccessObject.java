@@ -117,6 +117,20 @@ public class DatabaseAccessObject {
         values.put("Sector",sector);
         values.put("StockValue",value);
         values.put("StockMarket",market);
-        database.insert("Stock", null, values);
+        database.insert(DatabaseUtility.TABLE_STOCK, null, values);
+    }
+
+    public void updateStock(int stockId, String symbol, String name, String sector, double value, int market) {
+        ContentValues values = new ContentValues();
+        values.put("Symbol",symbol);
+        values.put("Name",name);
+        values.put("Sector",sector);
+        values.put("StockValue",value);
+        values.put("StockMarket",market);
+
+        String selection = "stockId LIKE ?";
+        String[] selectionArgs = { String.valueOf(stockId) };
+
+        database.update(DatabaseUtility.TABLE_STOCK,values,selection,selectionArgs);
     }
 }
