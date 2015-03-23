@@ -1,6 +1,5 @@
 package ch.hevs.stockexchange;
 
-import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -14,7 +13,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import ch.hevs.stockexchange.dbaccess.DatabaseAccessObject;
-import ch.hevs.stockexchange.dbaccess.DatabaseUtility;
+import ch.hevs.stockexchange.model.Stock;
 
 
 public class ManageStockActivity extends ActionBarActivity {
@@ -26,6 +25,7 @@ public class ManageStockActivity extends ActionBarActivity {
     private EditText editTextValue;
     private Button addStock;
     private DatabaseAccessObject datasource;
+    private int stockId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,29 +50,65 @@ public class ManageStockActivity extends ActionBarActivity {
 
         addStock = (Button) findViewById(R.id.btn_addStock);
 
-        addStock.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //If any of the text fields are empty, the user is informed
-                if(isEmpty(editTextSymbol)||isEmpty(editTextName)||
-                        isEmpty(editTextSector)||isEmpty(editTextValue)) {
-                    Toast.makeText(ManageStockActivity.this,R.string.toast_fieldsEmpty,Toast.LENGTH_SHORT).show();
-                    return;
-                }
+        Intent i = getIntent();
+        Bundle b = i.getExtras();
 
-                datasource.writeStock(editTextSymbol.getText().toString(),
-                        editTextName.getText().toString(),
-                        editTextSector.getText().toString(),
-                        Double.parseDouble(editTextValue.getText().toString()),
-                        spinner_markets.getSelectedItemPosition()+1); //Swiss market = 0, German market = 1
-                datasource.close();
+        if(b != null) {
+            stockId = b.getInt("stockId");
 
-                Toast.makeText(ManageStockActivity.this,R.string.toast_stockCreated,Toast.LENGTH_SHORT).show();
+            Stock s = datasource.getStockById(stockId);
 
-                //Return to the calling activity
-                finish();
-            }
-        });
+            editTextSymbol.setText(s.getSymbol());
+            editTextName.setText(s.getName());
+            editTextSector.setText(s.getSector());
+            editTextValue.setText(Double.toString(s.getValue()));
+            spinner_markets.setSelection((int) (s.getMarket().getId()-1));
+
+            setTitle(R.string.title_activity_manage_stock_update);
+
+            addStock.setText(R.string.sm_update_stock);
+            addStock.setOnClickListener(new UpdateStockListener());
+        } else {
+            addStock.setOnClickListener(new NewStockListener());
+        }
+    }
+
+    private class NewStockListener implements View.OnClickListener {
+        @Override
+        public void onClick(View v) {
+            checkFields();
+
+            datasource.writeStock(editTextSymbol.getText().toString(),
+                    editTextName.getText().toString(),
+                    editTextSector.getText().toString(),
+                    Double.parseDouble(editTextValue.getText().toString()),
+                    spinner_markets.getSelectedItemPosition()+1); //Swiss market = 0, German market = 1
+            datasource.close();
+
+            Toast.makeText(ManageStockActivity.this,R.string.toast_stockCreated,Toast.LENGTH_SHORT).show();
+
+            //Return to the calling activity
+            finish();
+        }
+    }
+
+    private class UpdateStockListener implements View.OnClickListener {
+        @Override
+        public void onClick(View v) {
+            checkFields();
+
+            //Update database
+
+        }
+    }
+
+    private void checkFields() {
+        //If any of the text fields are empty, the user is informed
+        if(isEmpty(editTextSymbol)||isEmpty(editTextName)||
+                isEmpty(editTextSector)||isEmpty(editTextValue)) {
+            Toast.makeText(ManageStockActivity.this,R.string.toast_fieldsEmpty,Toast.LENGTH_SHORT).show();
+            return;
+        }
     }
 
     /**

@@ -27,6 +27,7 @@ public class StockManagementActivity extends ActionBarActivity {
     private ListView listViewStocks;
     private DatabaseAccessObject datasource;
     private ArrayAdapter<Stock> adapter;
+    private int stockId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -111,19 +112,30 @@ public class StockManagementActivity extends ActionBarActivity {
         adapter = new ArrayAdapter<>(this,android.R.layout.simple_list_item_1,stocks);
         listViewStocks.setAdapter(adapter);
 
-        //Click: just for testing, will have no functionality in the final build
+        //Click: will show a menu to edit or delete a stock
         listViewStocks.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Log.d("Selected item", "position="+position+"; id="+id);
+                Log.d("getItem(position)",parent.getAdapter().getItem(position).toString());
+
+                /*Cursor c = (Cursor)(parent.getAdapter().getItem(position));
+                if(c != null) {
+                    stockId = c.getInt(0);
+                }
+                parent.getItemAtPosition(position);*/
+                Stock s = (Stock) (parent.getAdapter().getItem(position));
+                stockId = (int) s.getId();
+                parent.getItemAtPosition(position);
+
+                createChooseDialog();
             }
         });
 
-        //LongClick: will show a menu to edit or delete a stock
+        //LongClick: just for testing, will have no functionality in the final build
         listViewStocks.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                createChooseDialog();
+                Log.d("Selected item", "position="+position+"; id="+id);
                 return false;
             }
         });
@@ -140,13 +152,12 @@ public class StockManagementActivity extends ActionBarActivity {
                 case 0: //Edit
                     //Open ManageStockActivity with the corresponding data
                     Intent i = new Intent(StockManagementActivity.this,ManageStockActivity.class);
-                    i.putExtra("stockId",5); //TODO Put the correct stockId
+                    i.putExtra("stockId",stockId);
                     startActivity(i);
                     break;
                 case 1: //Delete
                     //Remove stock from the database
-                    //TODO Not correct at the moment. Needs method getStockId(int position)
-                    removeStock(which);
+                    removeStock(stockId);
                     break;
                 case 2: //Cancel
                     dialog.dismiss();
