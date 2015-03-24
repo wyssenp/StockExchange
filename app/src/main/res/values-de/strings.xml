@@ -36,6 +36,7 @@
 
     <string name="toast_stockCreated">Aktie wurde erfolgreich hinzugefügt!</string>
     <string name="toast_stockUpdated">Aktie wurde erfolgreich geändert!</string>
+    <string name="toast_stockDeleted">Aktie wurde erfolgreich gelöscht!</string>
     <string name="toast_fieldsEmpty">Alle Felder müssen ausgefüllt sein.</string>
 
     <string name="sm_dialog_chooseAction">Wählen Sie eine Aktion:</string>

@@ -36,6 +36,7 @@
 
     <string name="toast_stockCreated">Stock successfully created!</string>
     <string name="toast_stockUpdated">Stock successfully updated!</string>
+    <string name="toast_stockDeleted">Stock successfully deleted!</string>
     <string name="toast_fieldsEmpty">All text fields must contain a value in order to continue.</string>
 
     <string name="sm_dialog_chooseAction">Choose an action:</string>

@@ -15,6 +15,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -98,6 +99,8 @@ public class StockManagementActivity extends ActionBarActivity {
     private void removeStock(int stockId) {
         datasource.deleteStock(stockId);
 
+        Toast.makeText(this,R.string.toast_stockDeleted,Toast.LENGTH_SHORT).show();
+
         initializeList();
     }
 
@@ -116,13 +119,8 @@ public class StockManagementActivity extends ActionBarActivity {
         listViewStocks.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Log.d("getItem(position)",parent.getAdapter().getItem(position).toString());
+                //Log.d("getItem(position)",parent.getAdapter().getItem(position).toString());
 
-                /*Cursor c = (Cursor)(parent.getAdapter().getItem(position));
-                if(c != null) {
-                    stockId = c.getInt(0);
-                }
-                parent.getItemAtPosition(position);*/
                 Stock s = (Stock) (parent.getAdapter().getItem(position));
                 stockId = (int) s.getId();
                 parent.getItemAtPosition(position);

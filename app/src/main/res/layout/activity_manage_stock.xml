@@ -1,6 +1,13 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/scrollView"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
@@ -11,15 +18,20 @@
         android:layout_height="wrap_content"
         android:id="@+id/editTextSymbol"
         android:hint="@string/ms_stock_symbol"
+        android:inputType="textCapCharacters"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true" >
+
+        <requestFocus />
+        </EditText>
 
     <EditText
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:id="@+id/editTextName"
         android:hint="@string/sd_name"
+        android:inputType="textCapWords"
         android:layout_below="@+id/editTextSymbol"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
@@ -30,6 +42,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/editTextSector"
         android:hint="@string/ms_stock_sector"
+        android:inputType="textCapSentences"
         android:layout_below="@+id/editTextName"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
@@ -80,3 +93,4 @@
 
 
 </RelativeLayout>
+</ScrollView>
