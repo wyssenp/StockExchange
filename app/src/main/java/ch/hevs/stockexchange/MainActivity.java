@@ -44,6 +44,7 @@ public class MainActivity extends ActionBarActivity {
 
         ctx = getApplicationContext();
 
+        //Update the database with the most current exchange rates
         new DownloadTask().execute();
 
         myPortfolio.setOnClickListener(new View.OnClickListener() {
@@ -71,14 +72,19 @@ public class MainActivity extends ActionBarActivity {
         });
     }
 
+    /**
+     * Inner class used to update the exchange rates
+     */
     private class DownloadTask extends AsyncTask<Void, Integer, Void> {
         @Override
         protected Void doInBackground(Void... params) {
             try {
+                //Establish a connection through the Yahoo! Finance API to get a CSV with the current exchange rates
                 URL url = new URL("http://download.finance.yahoo.com/d/quotes.csv?s=USDEUR=x,CHFUSD=x,CHFEUR=x&f=l1");
                 URLConnection connection = url.openConnection();
                 connection.connect();
 
+                //Read the lines from the CSV and add them to an ArrayList
                 BufferedReader reader = new BufferedReader(new InputStreamReader(url.openStream()));
 
                 List<Double> exchangeRates = new ArrayList<>();
@@ -92,18 +98,19 @@ public class MainActivity extends ActionBarActivity {
                 reader.close();
 
                 //Data available at that point: USDEUR,CHFUSD,CHFEUR
+                //Calculate the remaining exchange rates by using the reciprocal value of the data available
                 double eur2usd = 1/exchangeRates.get(0);
                 double usd2chf = 1/exchangeRates.get(1);
                 double eur2chf = 1/exchangeRates.get(2);
 
+                //Open database and re-insert the values
                 datasource = new DatabaseAccessObject(ctx);
                 datasource.open();
 
-                //double chf_eur, double chf_usd, double eur_chf, double eur_usd, double usd_chf, double usd_eur
+                //Parameters: double chf_eur, double chf_usd, double eur_chf, double eur_usd, double usd_chf, double usd_eur
                 datasource.updateExchangeRates(exchangeRates.get(2),exchangeRates.get(1),eur2chf,eur2usd,usd2chf,exchangeRates.get(0));
 
                 datasource.close();
-
 
             } catch (MalformedURLException e) {
                 e.printStackTrace();
