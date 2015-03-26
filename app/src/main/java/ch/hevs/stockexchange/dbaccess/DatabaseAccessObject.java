@@ -46,6 +46,85 @@ public class DatabaseAccessObject {
         helper.close();
     }
 
+    /**
+     * Method used to update the database with the most recent exchange rates
+     * @param chf_eur Current exchange rate from CHF to EUR
+     * @param chf_usd Current exchange rate from CHF to USD
+     * @param eur_chf Current exchange rate from EUR to CHF
+     * @param eur_usd Current exchange rate from EUR to USD
+     * @param usd_chf Current exchange rate from USD to CHF
+     * @param usd_eur Current exchange rate from USD to EUR
+     */
+    public void updateExchangeRates(double chf_eur, double chf_usd, double eur_chf, double eur_usd, double usd_chf, double usd_eur) {
+        //Link: http://download.finance.yahoo.com/d/quotes.csv?s=USDEUR=x,CHFUSD=x,CHFEUR=x&f=l1
+        /*
+        Table ExchangeRate
+        CurrencyFrom
+        CurrencyTo
+        ExchangeRate
+
+        Table Currency
+        ID:Currency
+        1:CHF
+        2:USD
+        3:EUR
+         */
+
+        //Delete all the rows from the table
+        database.delete(DatabaseUtility.TABLE_EXCHANGERATE, null, null);
+        ContentValues values_chf_eur = new ContentValues();
+        values_chf_eur.put("CurrencyFrom",1);
+        values_chf_eur.put("CurrencyTo",3);
+        values_chf_eur.put("ExchangeRate",chf_eur);
+
+        ContentValues values_chf_usd = new ContentValues();
+        values_chf_usd.put("CurrencyFrom",1);
+        values_chf_usd.put("CurrencyTo",2);
+        values_chf_usd.put("ExchangeRate",chf_usd);
+
+        ContentValues values_eur_chf = new ContentValues();
+        values_eur_chf.put("CurrencyFrom",3);
+        values_eur_chf.put("CurrencyTo",1);
+        values_eur_chf.put("ExchangeRate",eur_chf);
+
+        ContentValues values_eur_usd = new ContentValues();
+        values_eur_usd.put("CurrencyFrom",3);
+        values_eur_usd.put("CurrencyTo",2);
+        values_eur_usd.put("ExchangeRate",eur_usd);
+
+        ContentValues values_usd_chf = new ContentValues();
+        values_usd_chf.put("CurrencyFrom",2);
+        values_usd_chf.put("CurrencyTo",1);
+        values_usd_chf.put("ExchangeRate",usd_chf);
+
+        ContentValues values_usd_eur = new ContentValues();
+        values_usd_eur.put("CurrencyFrom",2);
+        values_usd_eur.put("CurrencyTo",3);
+        values_usd_eur.put("ExchangeRate",usd_eur);
+
+        database.insert(DatabaseUtility.TABLE_EXCHANGERATE, null, values_chf_eur);
+        database.insert(DatabaseUtility.TABLE_EXCHANGERATE, null, values_chf_usd);
+        database.insert(DatabaseUtility.TABLE_EXCHANGERATE, null, values_eur_chf);
+        database.insert(DatabaseUtility.TABLE_EXCHANGERATE, null, values_eur_usd);
+        database.insert(DatabaseUtility.TABLE_EXCHANGERATE, null, values_usd_chf);
+        database.insert(DatabaseUtility.TABLE_EXCHANGERATE, null, values_usd_eur);
+
+    }
+
+    public void updateStock(int stockId, String symbol, String name, String sector, double value, int market) {
+        ContentValues values = new ContentValues();
+        values.put("Symbol",symbol);
+        values.put("Name",name);
+        values.put("Sector",sector);
+        values.put("StockValue",value);
+        values.put("StockMarket",market);
+
+        String selection = "stockId LIKE ?";
+        String[] selectionArgs = { String.valueOf(stockId) };
+
+        database.update(DatabaseUtility.TABLE_STOCK,values,selection,selectionArgs);
+    }
+
     public Stock getStockById(long id) {
         Stock result;
 
@@ -139,17 +218,4 @@ public class DatabaseAccessObject {
         database.insert(DatabaseUtility.TABLE_STOCK, null, values);
     }
 
-    public void updateStock(int stockId, String symbol, String name, String sector, double value, int market) {
-        ContentValues values = new ContentValues();
-        values.put("Symbol",symbol);
-        values.put("Name",name);
-        values.put("Sector",sector);
-        values.put("StockValue",value);
-        values.put("StockMarket",market);
-
-        String selection = "stockId LIKE ?";
-        String[] selectionArgs = { String.valueOf(stockId) };
-
-        database.update(DatabaseUtility.TABLE_STOCK,values,selection,selectionArgs);
-    }
 }
