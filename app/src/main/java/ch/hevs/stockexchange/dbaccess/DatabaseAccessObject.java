@@ -111,6 +111,15 @@ public class DatabaseAccessObject {
 
     }
 
+    /**
+     * Method used when the user changes the values of a stock
+     * @param stockId Needed to identify the stock
+     * @param symbol The symbol
+     * @param name The name
+     * @param sector Corresponding sector
+     * @param value The value
+     * @param market The market
+     */
     public void updateStock(int stockId, String symbol, String name, String sector, double value, int market) {
         ContentValues values = new ContentValues();
         values.put("Symbol",symbol);
@@ -125,6 +134,11 @@ public class DatabaseAccessObject {
         database.update(DatabaseUtility.TABLE_STOCK,values,selection,selectionArgs);
     }
 
+    /**
+     * Method used to display the correct stock when the users wishes to see the details
+     * @param id The stock identifier
+     * @return A stock object
+     */
     public Stock getStockById(long id) {
         Stock result;
 
@@ -136,6 +150,11 @@ public class DatabaseAccessObject {
         return result;
     }
 
+    /**
+     * Method used in the cursorToStock() method, because the foreign key in the stock table needs to be an integer and not a Market object
+     * @param id The market identifier
+     * @return A market object
+     */
     public Market getMarketById(long id) {
         Market result;
 
@@ -147,12 +166,20 @@ public class DatabaseAccessObject {
         return result;
     }
 
+    /**
+     * Method used in the stock management activity, to delete a stock
+     * @param stockId The stock identifier
+     */
     public void deleteStock(int stockId) {
         String query = "DELETE FROM " + DatabaseUtility.TABLE_STOCK + " WHERE stockId = " + stockId;
 
         database.execSQL(query);
     }
 
+    /**
+     * Method used to display all the stocks
+     * @return A generic list of all stocks in the database
+     */
     public List<Stock> getStocks() {
         List<Stock> stocks = new ArrayList<>();
 
@@ -169,6 +196,11 @@ public class DatabaseAccessObject {
         return stocks;
     }
 
+    /**
+     * Method used in the stock market activity, so that the user can filter by market
+     * @param marketId The stock market identifier
+     * @return A generic list of all stocks in the database belonging to a certain market
+     */
     public List<Stock> getStocksWithMarket(int marketId) {
         List<Stock> stocks = new ArrayList<>();
 
@@ -188,6 +220,11 @@ public class DatabaseAccessObject {
         return stocks;
     }
 
+    /**
+     * Method used to convert a cursor object into a stock object
+     * @param cursor The cursor
+     * @return A stock object
+     */
     private Stock cursorToStock(Cursor cursor) {
         Stock stock = new Stock();
         stock.setId(cursor.getLong(0));
@@ -199,6 +236,11 @@ public class DatabaseAccessObject {
         return stock;
     }
 
+    /**
+     * Method used to convert a cursor object into a market object
+     * @param cursor The cursor
+     * @return A market object
+     */
     private Market cursorToMarket(Cursor cursor) {
         Market market = new Market();
         market.setId(cursor.getLong(0));
@@ -208,6 +250,14 @@ public class DatabaseAccessObject {
         return market;
     }
 
+    /**
+     * Method used to insert a stock into the database
+     * @param symbol The symbol
+     * @param name The name
+     * @param sector Corresponding sector
+     * @param value The value
+     * @param market The market
+     */
     public void writeStock(String symbol, String name, String sector, double value, int market) {
         ContentValues values = new ContentValues();
         values.put("Symbol",symbol);
