@@ -38,6 +38,7 @@
     <string name="toast_stockUpdated">Stock successfully updated!</string>
     <string name="toast_stockDeleted">Stock successfully deleted!</string>
     <string name="toast_fieldsEmpty">All text fields must contain a value in order to continue.</string>
+    <string name="toast_noNetwork">Please activate your network in order to get the most recent currency exchange rates!</string>
 
     <string name="sm_dialog_chooseAction">Choose an action:</string>
     <string-array name="sm_dialog_choices">

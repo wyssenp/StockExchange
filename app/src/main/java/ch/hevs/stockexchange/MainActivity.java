@@ -2,29 +2,36 @@ package ch.hevs.stockexchange;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
-import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 
 import ch.hevs.stockexchange.dbaccess.DatabaseAccessObject;
 
-
+/**
+ * Created by Pierre-Alain Wyssen on 12.03.2015.
+ * Project: StockExchange
+ * Package: ch.hevs.stockexchange
+ * Description:
+ * Main activity of the app. First screen that the user sees when he launches the app, contains a main menu.
+ */
 public class MainActivity extends ActionBarActivity {
 
     private Button myPortfolio;
@@ -44,8 +51,17 @@ public class MainActivity extends ActionBarActivity {
 
         ctx = getApplicationContext();
 
-        //Update the database with the most current exchange rates
-        new DownloadTask().execute();
+        //Check if the phone is online or not; if not, the async task will not be executed
+        //Source: http://stackoverflow.com/questions/1560788/how-to-check-internet-access-on-android-inetaddress-never-timeouts
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = cm.getActiveNetworkInfo();
+        if(netInfo != null && netInfo.isConnectedOrConnecting()) {
+            //Update the database with the most current exchange rates
+            new DownloadTask().execute();
+        } else {
+            Toast.makeText(ctx,R.string.toast_noNetwork,Toast.LENGTH_SHORT).show();
+        }
+
 
         myPortfolio.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -74,6 +90,10 @@ public class MainActivity extends ActionBarActivity {
 
     /**
      * Inner class used to update the exchange rates
+     *
+     * Sources used:
+     * http://stackoverflow.com/questions/5787910/android-file-download-in-background
+     * http://stackoverflow.com/questions/5360628/get-and-parse-csv-file-in-android
      */
     private class DownloadTask extends AsyncTask<Void, Integer, Void> {
         @Override
@@ -115,6 +135,7 @@ public class MainActivity extends ActionBarActivity {
             } catch (MalformedURLException e) {
                 e.printStackTrace();
             } catch(IOException e) {
+                //Gets thrown when no connection is available
                 e.printStackTrace();
             }
             return null;

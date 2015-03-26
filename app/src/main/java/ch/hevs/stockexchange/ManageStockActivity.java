@@ -50,20 +50,24 @@ public class ManageStockActivity extends ActionBarActivity {
 
         addStock = (Button) findViewById(R.id.btn_addStock);
 
-        Intent i = getIntent();
-        Bundle b = i.getExtras();
+        Bundle b = getIntent().getExtras();
 
+        /*
+        Depending on whether the user creates a new stock or edits an existing stock, the appropriate listener is applied to the button
+         */
         if(b != null) {
             stockId = b.getInt("stockId");
 
             Stock s = datasource.getStockById(stockId);
 
+            //Fill the EditText's with the correct data
             editTextSymbol.setText(s.getSymbol());
             editTextName.setText(s.getName());
             editTextSector.setText(s.getSector());
             editTextValue.setText(Double.toString(s.getValue()));
             spinner_markets.setSelection((int) (s.getMarket().getId()-1));
 
+            //Change the title of the activity
             setTitle(R.string.title_activity_manage_stock_update);
 
             addStock.setText(R.string.sm_update_stock);

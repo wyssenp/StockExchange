@@ -14,7 +14,6 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class DatabaseUtility extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "StockExchange.db";
-    //private static final String DB_PATH = "/mnt/sdcard/";
     private static final int DATABASE_VERSION = 1;
     protected static final String TABLE_STOCK = "Stock";
     protected static final String TABLE_BROKER = "Broker";
@@ -76,19 +75,6 @@ public class DatabaseUtility extends SQLiteOpenHelper {
     private static final String TABLE_CURRENCY_INSERT_USD = "INSERT INTO " + TABLE_CURRENCY + "(Symbol, Name) VALUES ('USD','US Dollar');";
     private static final String TABLE_CURRENCY_INSERT_EUR = "INSERT INTO " + TABLE_CURRENCY + "(Symbol, Name) VALUES ('EUR','Euro');";
 
-    private static final String TABLE_EXCHANGERATE_INSERT_CHF_EUR = "INSERT INTO " + TABLE_EXCHANGERATE + "(CurrencyFrom, CurrencyTo, ExchangeRate) "+
-            "VALUES(1,3,0.95);";
-    private static final String TABLE_EXCHANGERATE_INSERT_CHF_USD = "INSERT INTO " + TABLE_EXCHANGERATE + "(CurrencyFrom, CurrencyTo, ExchangeRate) "+
-            "VALUES(1,2,1.04);";
-    private static final String TABLE_EXCHANGERATE_INSERT_EUR_CHF = "INSERT INTO " + TABLE_EXCHANGERATE + "(CurrencyFrom, CurrencyTo, ExchangeRate) "+
-            "VALUES(3,1,1.05);";
-    private static final String TABLE_EXCHANGERATE_INSERT_EUR_USD = "INSERT INTO " + TABLE_EXCHANGERATE + "(CurrencyFrom, CurrencyTo, ExchangeRate) "+
-            "VALUES(3,2,1.10);";
-    private static final String TABLE_EXCHANGERATE_INSERT_USD_CHF = "INSERT INTO " + TABLE_EXCHANGERATE + "(CurrencyFrom, CurrencyTo, ExchangeRate) "+
-            "VALUES(2,1,0.96);";
-    private static final String TABLE_EXCHANGERATE_INSERT_USD_EUR = "INSERT INTO " + TABLE_EXCHANGERATE + "(CurrencyFrom, CurrencyTo, ExchangeRate) "+
-            "VALUES(2,3,0.91);";
-
     public DatabaseUtility(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
@@ -105,12 +91,6 @@ public class DatabaseUtility extends SQLiteOpenHelper {
         db.execSQL(TABLE_CURRENCY_INSERT_CHF);
         db.execSQL(TABLE_CURRENCY_INSERT_USD);
         db.execSQL(TABLE_CURRENCY_INSERT_EUR);
-        db.execSQL(TABLE_EXCHANGERATE_INSERT_CHF_EUR);
-        db.execSQL(TABLE_EXCHANGERATE_INSERT_CHF_USD);
-        db.execSQL(TABLE_EXCHANGERATE_INSERT_EUR_CHF);
-        db.execSQL(TABLE_EXCHANGERATE_INSERT_EUR_USD);
-        db.execSQL(TABLE_EXCHANGERATE_INSERT_USD_CHF);
-        db.execSQL(TABLE_EXCHANGERATE_INSERT_USD_EUR);
         db.execSQL(TABLE_STOCKMARKET_INSERT_1);
         db.execSQL(TABLE_STOCKMARKET_INSERT_2);
     }
