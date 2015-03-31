@@ -27,12 +27,14 @@ public class DatabaseUtility extends SQLiteOpenHelper {
             "Symbol TEXT NOT NULL,"+
             "Name TEXT NOT NULL);";
 
+    //To insert the current time in CE(S)T instead of GMT, use (DATETIME(CURRENT_TIMESTAMP, 'localtime'))
+    //Source: http://stackoverflow.com/questions/14814433/how-to-change-timestamp-of-sqlite-db-to-local-timestamp
     private static final String TABLE_EXCHANGERATE_CREATE = "CREATE TABLE IF NOT EXISTS " + TABLE_EXCHANGERATE +
             "(exchangeRateId INTEGER PRIMARY KEY NOT NULL,"+
             "CurrencyFrom INTEGER NOT NULL,"+
             "CurrencyTo INTEGER NOT NULL,"+
             "ExchangeRate DOUBLE NOT NULL,"+
-            "ExchangeDate DATETIME DEFAULT CURRENT_TIMESTAMP,"+
+            "ExchangeDate DATETIME DEFAULT (DATETIME(CURRENT_TIMESTAMP, 'localtime')),"+
             "FOREIGN KEY(CurrencyFrom) REFERENCES " + TABLE_CURRENCY + "(currencyId)," +
             "FOREIGN KEY(CurrencyTo) REFERENCES " + TABLE_CURRENCY + "(currencyId));";
 

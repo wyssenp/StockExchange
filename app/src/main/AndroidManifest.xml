@@ -60,6 +60,10 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="ch.hevs.stockexchange.StockManagementActivity" />
         </activity>
+        <activity
+            android:name=".ExchangeRatesActivity"
+            android:label="@string/title_activity_exchange_rates" >
+        </activity>
     </application>
 
 </manifest>

@@ -1,0 +1,36 @@
+
+<TableLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_alignParentTop="true"
+    android:layout_alignParentLeft="true"
+    android:layout_alignParentStart="true"
+    tools:context="ch.hevs.stockexchange.ExchangeRatesActivity"
+    android:id="@+id/tableExchangeRates"
+    android:shrinkColumns="1" >
+
+    <TableRow android:paddingLeft="0dp"
+        android:paddingTop="0dp"
+        android:paddingRight="0dp"
+        android:paddingBottom="2dp">
+        <TextView
+            android:text="@string/tr_from"
+            android:padding="3dip" />
+        <TextView
+            android:text="@string/tr_to"
+            android:padding="3dip" />
+        <TextView
+            android:text="@string/tr_rate"
+            android:padding="3dip" />
+        <TextView
+            android:text="@string/tr_date"
+            android:padding="3dip" />
+    </TableRow>
+
+    <View
+        android:layout_height="2dip"
+        android:background="#FF909090" />
+
+</TableLayout>

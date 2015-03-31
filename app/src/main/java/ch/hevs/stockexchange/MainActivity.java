@@ -49,6 +49,17 @@ public class MainActivity extends ActionBarActivity {
         stockExchange = (Button) findViewById(R.id.btn_stockExchange);
         stockManagement = (Button) findViewById(R.id.btn_stockMgmt);
 
+        //testing
+        Button exchangeRates = (Button) findViewById(R.id.button2);
+        exchangeRates.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(MainActivity.this, ExchangeRatesActivity.class);
+                startActivity(i);
+            }
+        });
+        //end of testing
+
         ctx = getApplicationContext();
 
         //Check if the phone is online or not; if not, the async task will not be executed

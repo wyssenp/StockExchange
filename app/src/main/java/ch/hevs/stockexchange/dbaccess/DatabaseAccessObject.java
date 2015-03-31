@@ -9,6 +9,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import java.util.ArrayList;
 import java.util.List;
 
+import ch.hevs.stockexchange.model.ExchangeRate;
 import ch.hevs.stockexchange.model.Market;
 import ch.hevs.stockexchange.model.Stock;
 
@@ -25,6 +26,7 @@ public class DatabaseAccessObject {
     private SQLiteOpenHelper helper;
     private String[] stock_allColumns = {"stockId","Symbol","Name","Sector","StockMarket","StockValue"};
     private String[] market_allColumns = {"stockMarketId","Symbol","Name","Currency"};
+    private String[] exchangeRate_allColumns = {"exchangeRateId","CurrencyFrom","CurrencyTo","ExchangeRate","ExchangeDate"};
 
     public DatabaseAccessObject(Context context) {
         helper = new DatabaseUtility(context);
@@ -45,6 +47,39 @@ public class DatabaseAccessObject {
     {
         helper.close();
     }
+
+    public List<ExchangeRate> getExchangeRates() {
+        List<ExchangeRate> rates = new ArrayList<>();
+
+        Cursor cursor = database.query(DatabaseUtility.TABLE_EXCHANGERATE, exchangeRate_allColumns, null, null, null, null, null);
+
+        cursor.moveToFirst();
+        while(!cursor.isAfterLast()) {
+            ExchangeRate er = cursorToExchangeRate(cursor);
+            rates.add(er);
+            cursor.moveToNext();
+        }
+        cursor.close();
+        return rates;
+    }
+
+    /**
+     * Method used to convert a cursor object into an ExchangeRate object
+     * @param cursor The cursor
+     * @return A ExchangeRate object
+     */
+    private ExchangeRate cursorToExchangeRate(Cursor cursor) {
+        ExchangeRate er = new ExchangeRate();
+        er.setId(cursor.getLong(0));
+        er.setFrom(cursor.getString(1)); //TODO change to getCurrencyById(cursor.getString(1));
+        er.setTo(cursor.getString(2)); //TODO changge to getCurrencyById(cursor.getString(2));
+        er.setRate(cursor.getDouble(3));
+        er.setDate(cursor.getString(4));
+        return er;
+    }
+
+    //TODO implement Currency class
+    //TODO implement method getCurrencyById
 
     /**
      * Method used to update the database with the most recent exchange rates

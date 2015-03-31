@@ -8,6 +8,7 @@
     <string name="title_activity_manage_stock">Aktie Hinzufügen</string>
     <string name="title_activity_manage_stock_update">Aktie aktualisieren</string>
     <string name="title_activity_stock_details">Aktie: Details</string>
+    <string name="title_activity_exchange_rates">Wechselkurse</string>
 
     <string name="action_settings">Einstellungen</string>
     <string name="action_buyStocks">Aktien kaufen</string>
