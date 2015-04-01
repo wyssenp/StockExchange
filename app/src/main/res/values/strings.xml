@@ -24,7 +24,6 @@
     <string name="sd_symbol" translatable="false">Symbol</string>
     <string name="sd_sector">Sector</string>
     <string name="sd_value">Value</string>
-    <string name="sd_graph">Graph</string>
     <string name="sd_title_buy">Buy %1$s stocks</string>
     <string name="sd_select_nbr">Select number of stocks:</string>
     <string name="sd_button_buy">Buy</string>

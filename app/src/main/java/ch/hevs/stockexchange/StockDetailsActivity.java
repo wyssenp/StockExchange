@@ -10,7 +10,6 @@ import android.widget.NumberPicker;
 import android.widget.TextView;
 
 import ch.hevs.stockexchange.dbaccess.DatabaseAccessObject;
-import ch.hevs.stockexchange.dbaccess.DatabaseUtility;
 import ch.hevs.stockexchange.model.Stock;
 
 

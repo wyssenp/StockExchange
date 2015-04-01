@@ -9,6 +9,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import java.util.ArrayList;
 import java.util.List;
 
+import ch.hevs.stockexchange.model.Currency;
 import ch.hevs.stockexchange.model.ExchangeRate;
 import ch.hevs.stockexchange.model.Market;
 import ch.hevs.stockexchange.model.Stock;
@@ -27,6 +28,7 @@ public class DatabaseAccessObject {
     private String[] stock_allColumns = {"stockId","Symbol","Name","Sector","StockMarket","StockValue"};
     private String[] market_allColumns = {"stockMarketId","Symbol","Name","Currency"};
     private String[] exchangeRate_allColumns = {"exchangeRateId","CurrencyFrom","CurrencyTo","ExchangeRate","ExchangeDate"};
+    private String[] currency_allColumns = {"currencyId","Symbol","Name"};
 
     public DatabaseAccessObject(Context context) {
         helper = new DatabaseUtility(context);
@@ -71,15 +73,43 @@ public class DatabaseAccessObject {
     private ExchangeRate cursorToExchangeRate(Cursor cursor) {
         ExchangeRate er = new ExchangeRate();
         er.setId(cursor.getLong(0));
-        er.setFrom(cursor.getString(1)); //TODO change to getCurrencyById(cursor.getString(1));
-        er.setTo(cursor.getString(2)); //TODO changge to getCurrencyById(cursor.getString(2));
+        long from = Long.parseLong(cursor.getString(1));
+        er.setFrom(getCurrencyById(from).getSymbol());
+        long to = Long.parseLong(cursor.getString(2));
+        er.setTo(getCurrencyById(to).getSymbol());
         er.setRate(cursor.getDouble(3));
         er.setDate(cursor.getString(4));
         return er;
     }
 
-    //TODO implement Currency class
-    //TODO implement method getCurrencyById
+    /**
+     * Method used to display the correct currency in the exchange rates activity
+     * @param id The currency identifier
+     * @return A Currency object
+     */
+    public Currency getCurrencyById(long id) {
+        Currency result;
+
+        Cursor cursor = database.query(DatabaseUtility.TABLE_CURRENCY,currency_allColumns,"currencyId = " + id,
+                null, null, null, null);
+        cursor.moveToFirst();
+        result = cursorToCurrency(cursor);
+        cursor.close();
+        return result;
+    }
+
+    /**
+     * Method used to convert a cursor object into an Currency object
+     * @param cursor The cursor
+     * @return A Currency object
+     */
+    private Currency cursorToCurrency(Cursor cursor) {
+        Currency c = new Currency();
+        c.setId(cursor.getLong(0));
+        c.setSymbol(cursor.getString(1));
+        c.setName(cursor.getString(2));
+        return c;
+    }
 
     /**
      * Method used to update the database with the most recent exchange rates

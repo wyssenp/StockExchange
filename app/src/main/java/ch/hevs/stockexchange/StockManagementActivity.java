@@ -1,10 +1,8 @@
 package ch.hevs.stockexchange;
 
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.database.Cursor;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -14,7 +12,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.SimpleCursorAdapter;
 import android.widget.Toast;
 
 import java.util.List;
@@ -45,7 +42,6 @@ public class StockManagementActivity extends ActionBarActivity {
      * <li>Index 1 = Delete</li>
      * <li>Index 2 = Cancel</li>
      * </ul>
-     * @author Pierre-Alain Wyssen
      */
     private void createChooseDialog() {
         DialogInterface.OnClickListener clickListener = new MyClickListener();
@@ -61,7 +57,6 @@ public class StockManagementActivity extends ActionBarActivity {
     /**
      * This method as called after onCreate
      * It's also used to "refresh" the list when a new stock has been added
-     * @author Pierre-Alain Wyssen
      */
     @Override
     protected void onResume() {

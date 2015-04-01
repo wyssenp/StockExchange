@@ -16,10 +16,8 @@ import android.widget.Toast;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
-import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -143,8 +141,6 @@ public class MainActivity extends ActionBarActivity {
 
                 datasource.close();
 
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
             } catch(IOException e) {
                 //Gets thrown when no connection is available
                 e.printStackTrace();

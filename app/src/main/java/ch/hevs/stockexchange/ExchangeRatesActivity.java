@@ -1,10 +1,8 @@
 package ch.hevs.stockexchange;
 
 import android.app.ActionBar;
-import android.graphics.Color;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.ViewGroup;
@@ -39,30 +37,30 @@ public class ExchangeRatesActivity extends ActionBarActivity {
 
         List<ExchangeRate> rates = datasource.getExchangeRates();
         int rows = rates.size();
-        //Log.d("Number of rows", String.valueOf(rows));
 
+        //Create the table rows programmatically
         for(int i = 0; i < rows; i++) {
             TableRow row = new TableRow(this);
             row.setLayoutParams(new ActionBar.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
 
             TextView tv_from = new TextView(this);
-            tv_from.setPadding(0,5,0,5);
+            tv_from.setPadding(5,5,5,5); //left, top, right, bottom
             tv_from.setText(rates.get(i).getFrom());
             row.addView(tv_from);
 
             TextView tv_to = new TextView(this);
-            tv_to.setPadding(0,5,0,5);
+            tv_to.setPadding(5,5,50,5);
             tv_to.setText(rates.get(i).getTo());
             row.addView(tv_to);
 
             TextView tv_rate = new TextView(this);
-            tv_rate.setPadding(0,5,0,5);
+            tv_rate.setPadding(5,5,5,5);
             DecimalFormat df = new DecimalFormat("0.00");
             tv_rate.setText(df.format(rates.get(i).getRate()));
             row.addView(tv_rate);
 
             TextView tv_date = new TextView(this);
-            tv_date.setPadding(0,5,0,5);
+            tv_date.setPadding(5,5,5,5);
             //TODO Make a check on the language of the phone and set the appropriate formatter
             //SimpleDateFormat formatterGerman = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
             SimpleDateFormat formatterDefault = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss a");

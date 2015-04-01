@@ -1,6 +1,5 @@
 package ch.hevs.stockexchange;
 
-import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -129,7 +128,6 @@ public class ManageStockActivity extends ActionBarActivity {
 
     /**
      * Helper method that makes sure that all fields (EditText) are filled
-     * @author Pierre-Alain Wyssen
      */
     private void checkFields() {
         //If any of the text fields are empty, the user is informed
@@ -144,7 +142,6 @@ public class ManageStockActivity extends ActionBarActivity {
      * Check if a text field (EditText) is empty
      * @param editText The EditText object
      * @return false if it's not empty, true if it's empty
-     * @author Pierre-Alain Wyssen
      */
     private boolean isEmpty(EditText editText) {
         return editText.getText().toString().trim().length() == 0;

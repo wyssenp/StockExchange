@@ -57,6 +57,11 @@
         <item>Schweizer Markt</item>
         <item>Deutscher Markt</item>
     </string-array>
+    <string name="toast_noNetwork">Um die aktuellen Wechselkurse herunterzuladen wird eine Internetverbind benötigt!</string>
+    <string name="tr_date">Datum / Zeit</string>
+    <string name="tr_from">Von</string>
+    <string name="tr_rate">Kurs</string>
+    <string name="tr_to">Nach</string>
 
 
 </resources>
