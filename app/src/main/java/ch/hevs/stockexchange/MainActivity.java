@@ -57,7 +57,7 @@ public class MainActivity extends ActionBarActivity {
             //Update the database with the most current exchange rates
             new DownloadTask().execute();
         } else {
-            Toast.makeText(ctx,R.string.toast_noNetwork,Toast.LENGTH_SHORT).show();
+            Toast.makeText(ctx,R.string.toast_noNetwork,Toast.LENGTH_LONG).show();
         }
 
 
