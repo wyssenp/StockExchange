@@ -50,6 +50,10 @@ public class DatabaseAccessObject {
         helper.close();
     }
 
+    /**
+     * Method used to display all the exchange rates
+     * @return A generic list of all exchange rates in the database
+     */
     public List<ExchangeRate> getExchangeRates() {
         List<ExchangeRate> rates = new ArrayList<>();
 
