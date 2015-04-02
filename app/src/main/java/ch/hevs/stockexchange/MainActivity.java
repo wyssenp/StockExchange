@@ -134,6 +134,7 @@ public class MainActivity extends ActionBarActivity {
                 //Gets thrown when no connection is available
                 e.printStackTrace();
             }
+            //TODO Make a toast here to inform the user when this operation is finished
             return null;
         }
     }
