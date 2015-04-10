@@ -1,25 +1,46 @@
 package ch.hevs.stockexchange;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
+
+import java.util.List;
+
+import ch.hevs.stockexchange.dbaccess.DatabaseAccessObject;
+import ch.hevs.stockexchange.model.Portfolio;
 
 
 public class MyPortfolioActivity extends ActionBarActivity {
 
     private ListView list_myStocks;
+    private DatabaseAccessObject datasource;
+    private ArrayAdapter<Portfolio> adapter;
+    private int portfolioId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_portfolio);
+        initializeList();
+    }
 
-        list_myStocks = (ListView) findViewById(R.id.list_stocks);
-
-
+    /**
+     * This method as called after onCreate
+     * It's also used to "refresh" the list when a new stock has been added
+     */
+    @Override
+    protected void onResume() {
+        super.onResume();
+        initializeList();
     }
 
 
@@ -48,5 +69,80 @@ public class MyPortfolioActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void initializeList() {
+        datasource = new DatabaseAccessObject(this);
+        datasource.open();
+
+        list_myStocks = (ListView) findViewById(R.id.list_stocks);
+
+        List<Portfolio> portfolios;
+        portfolios = datasource.getPortfolio();
+
+        adapter = new ArrayAdapter<>(this,android.R.layout.simple_list_item_1,portfolios);
+        list_myStocks.setAdapter(adapter);
+
+        //Click: will show a menu to edit or delete a stock
+        list_myStocks.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                //Log.d("getItem(position)",parent.getAdapter().getItem(position).toString());
+
+                Portfolio p = (Portfolio) (parent.getAdapter().getItem(position));
+                portfolioId = (int) p.getId();
+                parent.getItemAtPosition(position);
+
+                createChooseDialog();
+            }
+        });
+    }
+
+    /**
+     * <p>When the user clicks on a portfolio entry a dialog shows where he can choose to sell the
+     * stock. He can also cancel the action.</p>
+     * <p>The options to choose from are:</p>
+     * <ul>
+     * <li>Index 0 = Sell</li>
+     * <li>Index 1 = Cancel</li>
+     * </ul>
+     */
+    private void createChooseDialog() {
+        DialogInterface.OnClickListener clickListener = new MyClickListener();
+
+        AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+        dialog.setTitle(R.string.sm_dialog_chooseAction);
+        dialog.setCancelable(true);
+        dialog.setItems(R.array.mp_dialog_choices, clickListener);
+        dialog.show();
+
+    }
+
+    /**
+     * Custom click listener for the dialog that shows when the user performs a long click on a
+     * portfolio entry.
+     * @author Stefan Eggenschwiler
+     */
+    private class MyClickListener implements DialogInterface.OnClickListener {
+        @Override
+        public void onClick(DialogInterface dialog, int which) {
+            switch(which) {
+                case 0: //Delete
+                    //Remove stock from the database
+                    sellStock(portfolioId);
+                    break;
+                case 1: //Cancel
+                    dialog.dismiss();
+                    break;
+            }
+        }
+    }
+
+    private void sellStock(int portfolioId) {
+        datasource.deletePortfolio(portfolioId);
+
+        Toast.makeText(this,R.string.toast_stockSold,Toast.LENGTH_SHORT).show();
+
+        initializeList();
     }
 }

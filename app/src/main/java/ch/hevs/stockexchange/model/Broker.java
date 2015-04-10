@@ -30,19 +30,16 @@ public class Broker {
         this.name = name;
     }
 
-    public String getBankType() {
-        return bankType;
-    }
-
     public void setBankType(String bankType) {
         this.bankType = bankType;
     }
 
-    public String getSecuritesDealerType() {
-        return securitesDealerType;
-    }
-
     public void setSecuritesDealerType(String securitesDealerType) {
         this.securitesDealerType = securitesDealerType;
+    }
+
+    @Override
+    public String toString() {
+        return this.name;
     }
 }

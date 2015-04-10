@@ -9,9 +9,11 @@ import android.database.sqlite.SQLiteOpenHelper;
 import java.util.ArrayList;
 import java.util.List;
 
+import ch.hevs.stockexchange.model.Broker;
 import ch.hevs.stockexchange.model.Currency;
 import ch.hevs.stockexchange.model.ExchangeRate;
 import ch.hevs.stockexchange.model.Market;
+import ch.hevs.stockexchange.model.Portfolio;
 import ch.hevs.stockexchange.model.Stock;
 
 /**
@@ -29,6 +31,8 @@ public class DatabaseAccessObject {
     private String[] market_allColumns = {"stockMarketId","Symbol","Name","Currency"};
     private String[] exchangeRate_allColumns = {"exchangeRateId","CurrencyFrom","CurrencyTo","ExchangeRate","ExchangeDate"};
     private String[] currency_allColumns = {"currencyId","Symbol","Name"};
+    private String[] broker_allColumns = {"brokerId", "Name", "BankType", "SecuritiesDealerType"};
+    private String[] portfolio_allColumns = {"portfolioId", "Stock", "Broker", "Value", "Amount"};
 
     public DatabaseAccessObject(Context context) {
         helper = new DatabaseUtility(context);
@@ -94,7 +98,7 @@ public class DatabaseAccessObject {
     public Currency getCurrencyById(long id) {
         Currency result;
 
-        Cursor cursor = database.query(DatabaseUtility.TABLE_CURRENCY,currency_allColumns,"currencyId = " + id,
+        Cursor cursor = database.query(DatabaseUtility.TABLE_CURRENCY, currency_allColumns, "currencyId = " + id,
                 null, null, null, null);
         cursor.moveToFirst();
         result = cursorToCurrency(cursor);
@@ -192,9 +196,9 @@ public class DatabaseAccessObject {
     public void updateStock(int stockId, String symbol, String name, String sector, double value, int market) {
         ContentValues values = new ContentValues();
         values.put("Symbol",symbol);
-        values.put("Name",name);
+        values.put("Name", name);
         values.put("Sector",sector);
-        values.put("StockValue",value);
+        values.put("StockValue", value);
         values.put("StockMarket",market);
 
         String selection = "stockId LIKE ?";
@@ -320,6 +324,36 @@ public class DatabaseAccessObject {
     }
 
     /**
+     * Method used to convert a cursor object into a broker object
+     * @param cursor The cursor
+     * @return A broker object
+     */
+    private Broker cursorToBroker(Cursor cursor) {
+        Broker broker = new Broker();
+        broker.setId(cursor.getLong(0));
+        broker.setName(cursor.getString(1));
+        broker.setBankType(cursor.getString(2));
+        broker.setSecuritesDealerType(cursor.getString(3));
+        return broker;
+    }
+
+    /**
+     * Method used to convert a cursort object into a portfolio object
+     * @param cursor The cursor
+     * @return A portfolio object
+     */
+    private Portfolio cursortToPortfolio(Cursor cursor) {
+        Portfolio portfolio = new Portfolio();
+        portfolio.setId(cursor.getLong(0));
+        portfolio.setStock(getStockById(cursor.getLong(1)));
+        portfolio.setBroker(getBrokerById(cursor.getLong(2)));
+        portfolio.setValue(cursor.getDouble(3));
+        portfolio.setAmount(cursor.getInt(4));
+
+        return portfolio;
+    }
+
+    /**
      * Method used to insert a stock into the database
      * @param symbol The symbol
      * @param name The name
@@ -329,12 +363,86 @@ public class DatabaseAccessObject {
      */
     public void writeStock(String symbol, String name, String sector, double value, int market) {
         ContentValues values = new ContentValues();
-        values.put("Symbol",symbol);
-        values.put("Name",name);
-        values.put("Sector",sector);
-        values.put("StockValue",value);
-        values.put("StockMarket",market);
+        values.put("Symbol", symbol);
+        values.put("Name", name);
+        values.put("Sector", sector);
+        values.put("StockValue", value);
+        values.put("StockMarket", market);
         database.insert(DatabaseUtility.TABLE_STOCK, null, values);
     }
 
+    /**
+     * Method used in the stock details activity in order to show the brokers
+     * @return A generic list of all brokers in the database
+     */
+    public List<Broker> getBrokers() {
+        List<Broker> brokers = new ArrayList<>();
+
+        Cursor cursor = database.query(DatabaseUtility.TABLE_BROKER,broker_allColumns,null,null,null,null,"brokerId");
+
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()) {
+            brokers.add(cursorToBroker(cursor));
+            cursor.moveToNext();
+        }
+        cursor.close();
+
+        return brokers;
+    }
+
+    /**
+     * Method used to select the correct broker for the user portfolio
+     * @param brokerId The stock identifier
+     * @return A broker object
+     */
+    public Broker getBrokerById(long brokerId) {
+        Broker broker;
+
+        Cursor cursor = database.query(DatabaseUtility.TABLE_BROKER,broker_allColumns,
+                "brokerId = " + brokerId,null,null,null,null);
+
+        cursor.moveToFirst();
+        broker = cursorToBroker(cursor);
+        cursor.close();
+
+        return broker;
+    }
+
+    public void addStockToPortfolio(long stockId, long brokerId, double value, int amount) {
+        ContentValues values = new ContentValues();
+        values.put("Stock", stockId);
+        values.put("Broker", brokerId);
+        values.put("Value", value);
+        values.put("Amount", amount);
+        database.insert(DatabaseUtility.TABLE_PORTFOLIO, null, values);
+    }
+
+    /**
+     * Method used in the myPortfolio activity in order to show the portfolio
+     * @return A generic list of the portfolio in the database
+     */
+    public List<Portfolio> getPortfolio() {
+        List<Portfolio> portfolio = new ArrayList<>();
+
+        Cursor cursor = database.query(DatabaseUtility.TABLE_PORTFOLIO,portfolio_allColumns,null,null,null,null,"portfolioId");
+
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()) {
+            portfolio.add(cursortToPortfolio(cursor));
+            cursor.moveToNext();
+        }
+        cursor.close();
+
+        return portfolio;
+    }
+
+    /**
+     * Method used to "sell" stocks from the portfolio
+     * @param portfolioId The portfolio Id
+     */
+    public void deletePortfolio(long portfolioId) {
+        String query = "DELETE FROM " + DatabaseUtility.TABLE_PORTFOLIO + " WHERE portfolioId = " + portfolioId;
+
+        database.execSQL(query);
+    }
 }

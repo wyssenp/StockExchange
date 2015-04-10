@@ -27,6 +27,7 @@
     <string name="sd_graph">Grafik</string>
     <string name="sd_title_buy">%1$s-Aktien kaufen</string>
     <string name="sd_select_nbr">Anzahl Aktien:</string>
+    <string name="sd_select_broker">Händler auswählen:</string>
     <string name="sd_button_buy">Kaufen</string>
 
     <string name="sm_add_stock">Aktie hinzufügen</string>
@@ -38,12 +39,19 @@
     <string name="toast_stockCreated">Aktie wurde erfolgreich hinzugefügt!</string>
     <string name="toast_stockUpdated">Aktie wurde erfolgreich geändert!</string>
     <string name="toast_stockDeleted">Aktie wurde erfolgreich gelöscht!</string>
+    <string name="toast_stockBought">Aktie wurde erfolgreich gekauft!</string>
+    <string name="toast_stockSold">Aktie wurde erfolgreich verkauft!</string>
     <string name="toast_fieldsEmpty">Alle Felder müssen ausgefüllt sein.</string>
 
     <string name="sm_dialog_chooseAction">Wählen Sie eine Aktion:</string>
     <string-array name="sm_dialog_choices">
         <item>Verändern</item>
         <item>Löschen</item>
+        <item>Abbrechen</item>
+    </string-array>
+
+    <string-array name="mp_dialog_choices">
+        <item>Verkaufen</item>
         <item>Abbrechen</item>
     </string-array>
 

@@ -64,6 +64,8 @@ public class DatabaseUtility extends SQLiteOpenHelper {
             "(portfolioId INTEGER PRIMARY KEY NOT NULL,"+
             "Stock INTEGER NOT NULL,"+
             "Broker INTEGER NOT NULL,"+
+            "Value INTEGER NOT NULL,"+
+            "Amount INTEGER NOT NULL,"+
             "FOREIGN KEY(Stock) REFERENCES " + TABLE_STOCK + "(stockId),"+
             "FOREIGN KEY(Broker) REFERENCES " + TABLE_BROKER + "(brokerId));";
 
@@ -76,6 +78,40 @@ public class DatabaseUtility extends SQLiteOpenHelper {
     private static final String TABLE_CURRENCY_INSERT_CHF = "INSERT INTO " + TABLE_CURRENCY + "(Symbol, Name) VALUES ('CHF','Swiss Francs');";
     private static final String TABLE_CURRENCY_INSERT_USD = "INSERT INTO " + TABLE_CURRENCY + "(Symbol, Name) VALUES ('USD','US Dollar');";
     private static final String TABLE_CURRENCY_INSERT_EUR = "INSERT INTO " + TABLE_CURRENCY + "(Symbol, Name) VALUES ('EUR','Euro');";
+
+    private static final String TABLE_BROKER_INSERT_1 = "INSERT INTO " + TABLE_BROKER  + "(Name, BankType, SecuritiesDealerType) "+
+            "VALUES('Aquila Co. AG','Andere Bank', 'Swiss securities dealer');";
+    private static final String TABLE_BROKER_INSERT_2 = "INSERT INTO " + TABLE_BROKER  + "(Name, BankType, SecuritiesDealerType) "+
+            "VALUES('BANCA CREDINVEST SA','Ausländische Bank', 'Foreign-controlled securities dealer');";
+    private static final String TABLE_BROKER_INSERT_3 = "INSERT INTO " + TABLE_BROKER  + "(Name, BankType, SecuritiesDealerType) "+
+            "VALUES('SB Saanen Bank AG','Regionale Bank', 'Swiss securities dealer');";
+    private static final String TABLE_BROKER_INSERT_4 = "INSERT INTO " + TABLE_BROKER  + "(Name, BankType, SecuritiesDealerType) "+
+            "VALUES('Zevener Volksbank','Regionale Bank', 'German securities deal');";
+    private static final String TABLE_BROKER_INSERT_5 = "INSERT INTO " + TABLE_BROKER  + "(Name, BankType, SecuritiesDealerType) "+
+            "VALUES('Ostsee Sparkasse Rostock','Regionale Bank', 'German securities deal');";
+    private static final String TABLE_BROKER_INSERT_6 = "INSERT INTO " + TABLE_BROKER  + "(Name, BankType, SecuritiesDealerType) "+
+            "VALUES('SHINHAN BANK EUROPE GmbH','Ausländische Bank', 'Foreign-controlled securities deal');";
+
+    private static final String TABLE_STOCK_INSERT_1 = "INSERT INTO " + TABLE_STOCK  + "(Symbol, Name, Sector, StockMarket, StockValue) "+
+            "VALUES('BAER','Julius Baer Group Ltd', 'Financials', 1, 52.8);";
+    private static final String TABLE_STOCK_INSERT_2 = "INSERT INTO " + TABLE_STOCK  + "(Symbol, Name, Sector, StockMarket, StockValue) "+
+            "VALUES('CSGN','Credit Suisse Group AG', 'Financials', 1, 27.46);";
+    private static final String TABLE_STOCK_INSERT_3 = "INSERT INTO " + TABLE_STOCK  + "(Symbol, Name, Sector, StockMarket, StockValue) "+
+            "VALUES('NOVN','Novartis AG', 'Health Care', 1, 101.2);";
+    private static final String TABLE_STOCK_INSERT_4 = "INSERT INTO " + TABLE_STOCK  + "(Symbol, Name, Sector, StockMarket, StockValue) "+
+            "VALUES('NESN','Nestle SA', 'Consumer Staples', 1, 75.75);";
+    private static final String TABLE_STOCK_INSERT_5 = "INSERT INTO " + TABLE_STOCK  + "(Symbol, Name, Sector, StockMarket, StockValue) "+
+            "VALUES('HEN3','Henkel AG & Co KGaA', 'Consumer Staples', 2, 115);";
+    private static final String TABLE_STOCK_INSERT_6 = "INSERT INTO " + TABLE_STOCK  + "(Symbol, Name, Sector, StockMarket, StockValue) "+
+            "VALUES('ALV','Allianz SE', 'Financials', 2, 169.45);";
+    private static final String TABLE_STOCK_INSERT_7 = "INSERT INTO " + TABLE_STOCK  + "(Symbol, Name, Sector, StockMarket, StockValue) "+
+            "VALUES('TKA','ThyssenKrupp AG', 'Materials', 2, 25.445);";
+    private static final String TABLE_STOCK_INSERT_8 = "INSERT INTO " + TABLE_STOCK  + "(Symbol, Name, Sector, StockMarket, StockValue) "+
+            "VALUES('BAYN','Bayer AG', 'Health Care', 2, 144.75);";
+    private static final String TABLE_STOCK_INSERT_9 = "INSERT INTO " + TABLE_STOCK  + "(Symbol, Name, Sector, StockMarket, StockValue) "+
+            "VALUES('BMW','Bayerische Motoren Werke AG', 'Consumer Discretionary', 2, 117.65);";
+    private static final String TABLE_STOCK_INSERT_10 = "INSERT INTO " + TABLE_STOCK  + "(Symbol, Name, Sector, StockMarket, StockValue) "+
+            "VALUES('HEI','HeidelbergCement AG', 'Materials', 2, 76.42);";
 
     public DatabaseUtility(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -95,6 +131,22 @@ public class DatabaseUtility extends SQLiteOpenHelper {
         db.execSQL(TABLE_CURRENCY_INSERT_EUR);
         db.execSQL(TABLE_STOCKMARKET_INSERT_1);
         db.execSQL(TABLE_STOCKMARKET_INSERT_2);
+        db.execSQL(TABLE_BROKER_INSERT_1);
+        db.execSQL(TABLE_BROKER_INSERT_2);
+        db.execSQL(TABLE_BROKER_INSERT_3);
+        db.execSQL(TABLE_BROKER_INSERT_4);
+        db.execSQL(TABLE_BROKER_INSERT_5);
+        db.execSQL(TABLE_BROKER_INSERT_6);
+        db.execSQL(TABLE_STOCK_INSERT_1);
+        db.execSQL(TABLE_STOCK_INSERT_2);
+        db.execSQL(TABLE_STOCK_INSERT_3);
+        db.execSQL(TABLE_STOCK_INSERT_4);
+        db.execSQL(TABLE_STOCK_INSERT_5);
+        db.execSQL(TABLE_STOCK_INSERT_6);
+        db.execSQL(TABLE_STOCK_INSERT_7);
+        db.execSQL(TABLE_STOCK_INSERT_8);
+        db.execSQL(TABLE_STOCK_INSERT_9);
+        db.execSQL(TABLE_STOCK_INSERT_10);
     }
 
     @Override

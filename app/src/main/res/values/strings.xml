@@ -26,6 +26,7 @@
     <string name="sd_value">Value</string>
     <string name="sd_title_buy">Buy %1$s stocks</string>
     <string name="sd_select_nbr">Select number of stocks:</string>
+    <string name="sd_select_broker">Select broker:</string>
     <string name="sd_button_buy">Buy</string>
 
     <string name="sm_add_stock">Add stock</string>
@@ -37,6 +38,8 @@
     <string name="toast_stockCreated">Stock successfully created!</string>
     <string name="toast_stockUpdated">Stock successfully updated!</string>
     <string name="toast_stockDeleted">Stock successfully deleted!</string>
+    <string name="toast_stockBought">Stock successfully bought!</string>
+    <string name="toast_stockSold">Stock successfully sold!</string>
     <string name="toast_fieldsEmpty">All text fields must contain a value in order to continue.</string>
     <string name="toast_noNetwork">Please activate your network in order to get the most recent currency exchange rates!</string>
 
@@ -44,6 +47,11 @@
     <string-array name="sm_dialog_choices">
         <item>Edit</item>
         <item>Delete</item>
+        <item>Cancel</item>
+    </string-array>
+
+    <string-array name="mp_dialog_choices">
+        <item>Sell</item>
         <item>Cancel</item>
     </string-array>
 

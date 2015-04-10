@@ -123,6 +123,16 @@
         android:layout_height="wrap_content"
         android:text="@string/sd_select_nbr"
         android:id="@+id/textView6"
+        android:layout_below="@+id/spinner_broker"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="5dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/sd_select_broker"
+        android:id="@+id/textView7"
         android:layout_below="@+id/textView5"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
@@ -140,10 +150,20 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/sd_button_buy"
-        android:id="@+id/button"
+        android:id="@+id/btn_buyStock"
         android:layout_below="@+id/numberPicker"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:background="#96ffffff" />
+        android:background="#96ffffff"
+        android:layout_marginTop="5dp"/>
+
+    <Spinner
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/spinner_broker"
+        android:layout_below="@+id/textView7"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
 </RelativeLayout>
 </ScrollView>
