@@ -67,10 +67,44 @@
         <item>Schweizer Markt</item>
         <item>Deutscher Markt</item>
     </string-array>
+
+    <string-array name="array_languages">
+        <item>Deutsch</item>
+        <item>Englisch</item>
+    </string-array>
+
+    <string-array name="values_languages">
+        <item>DE</item>
+        <item>EN</item>
+    </string-array>
+
+    <string-array name="array_currency">
+        <item>Schweizer Franken</item>
+        <item>U.S. Dollar</item>
+        <item>Euro</item>
+    </string-array>
+
+    <string-array name="values_currency">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+    </string-array>
+
     <string name="tr_date">Datum / Zeit</string>
     <string name="tr_from">Von</string>
     <string name="tr_rate">Kurs</string>
     <string name="tr_to">Nach</string>
+    <string name="title_activity_settings">Einstellungen</string>
+    <string name="settings_title">Einstellungen</string>
+    <string name="settings_about">Impressum</string>
+    <string name="title_activity_about">Impressum</string>
+    <string name="settings_curr_dialog">Währung auswählen:</string>
+    <string name="settings_curr_summary">Wählen Sie die gewünschte Währung für die Aktienpreise aus</string>
+    <string name="settings_curr_title">Währungseinstellungen</string>
+    <string name="settings_lang_dialog">Sprache auswählen:</string>
+    <string name="settings_lang_summary">Wählen Sie die gewünschte Sprache für die Applikation aus</string>
+    <string name="settings_lang_title">Spracheinstellungen</string>
+    <string name="settings_exch_rates">Wechselkurse anzeigen</string>
 
 
 </resources>

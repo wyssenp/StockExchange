@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory
+        android:title="@string/settings_title"
+        android:key="settings">
+
+    <ListPreference
+        android:title="@string/settings_lang_title"
+        android:summary="@string/settings_lang_summary"
+        android:key="current_language"
+        android:dialogTitle="@string/settings_lang_dialog"
+        android:entries="@array/array_languages"
+        android:entryValues="@array/values_languages"
+        android:defaultValue="DE"
+        />
+
+    <ListPreference
+        android:title="@string/settings_curr_title"
+        android:summary="@string/settings_curr_summary"
+        android:key="current_currency"
+        android:dialogTitle="@string/settings_curr_dialog"
+        android:entries="@array/array_currency"
+        android:entryValues="@array/values_currency"
+        android:defaultValue="1"
+        />
+    </PreferenceCategory>
+
+    <Preference android:title="@string/settings_exch_rates" >
+        <intent android:action="android.intent.action.VIEW"
+            android:targetPackage="ch.hevs.stockexchange"
+            android:targetClass="ch.hevs.stockexchange.ExchangeRatesActivity"/>
+    </Preference>
+
+    <Preference android:title="@string/settings_about" >
+        <intent android:action="android.intent.action.VIEW"
+            android:targetPackage="ch.hevs.stockexchange"
+            android:targetClass="ch.hevs.stockexchange.AboutActivity"/>
+    </Preference>
+</PreferenceScreen>
