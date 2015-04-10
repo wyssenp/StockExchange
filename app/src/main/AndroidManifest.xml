@@ -64,6 +64,14 @@
             android:name=".ExchangeRatesActivity"
             android:label="@string/title_activity_exchange_rates" >
         </activity>
+        <activity
+            android:name=".SettingsActicity"
+            android:label="@string/title_activity_settings"
+            android:parentActivityName=".MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="ch.hevs.stockexchange.MainActivity" />
+        </activity>
     </application>
 
 </manifest>

@@ -5,8 +5,8 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -56,6 +56,7 @@ public class MainActivity extends ActionBarActivity {
         if(netInfo != null && netInfo.isConnectedOrConnecting()) {
             //Update the database with the most current exchange rates
             new DownloadTask().execute();
+            Toast.makeText(ctx,R.string.toast_updateSucessfull,Toast.LENGTH_LONG).show();
         } else {
             Toast.makeText(ctx,R.string.toast_noNetwork,Toast.LENGTH_LONG).show();
         }
@@ -134,7 +135,6 @@ public class MainActivity extends ActionBarActivity {
                 //Gets thrown when no connection is available
                 e.printStackTrace();
             }
-            //TODO Make a toast here to inform the user when this operation is finished
             return null;
         }
     }
