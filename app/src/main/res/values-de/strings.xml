@@ -105,8 +105,8 @@
     <string name="settings_lang_summary">Wählen Sie die gewünschte Sprache für die Applikation aus</string>
     <string name="settings_lang_title">Spracheinstellungen</string>
     <string name="settings_exch_rates">Wechselkurse anzeigen</string>
-    <string name="about_text">Diese Applikation wurde im Rahmen des Moduls 644-1 Wahl der Schule 2 im Studiengang für Wirtschaftsinformatik an der HES-SO Sierre/Siders von den beiden Studenten Pierre-Alain Wyssen und Stefan Eggenschwiler entwickelt.</string>
-    <string name="about_logo_desc">Logo der HES-SO Sierre/Siders</string>
+    <string name="about_text">Diese Applikation wurde im Rahmen des Moduls 644-1 Wahl der Schule 2 im Studiengang für Wirtschaftsinformatik an der HES-SO Valais//Wallis von den beiden Studenten Pierre-Alain Wyssen und Stefan Eggenschwiler entwickelt.</string>
+    <string name="about_logo_desc">Logo der HES-SO Valais//Wallis</string>
     <string name="toast_language_change">Sprache geändert zu: %1$s</string>
     <string name="toast_currency_change">Währung geändert zu: %1$s</string>
 
