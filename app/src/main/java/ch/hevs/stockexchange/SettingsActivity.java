@@ -20,9 +20,12 @@ public class SettingsActivity extends PreferenceActivity implements SharedPrefer
         getPreferenceScreen().getSharedPreferences().registerOnSharedPreferenceChangeListener(this);
     }
 
+
     @Override
     public void onBackPressed() {
         Intent i = new Intent(this, MainActivity.class);
+        i.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        finish();
         startActivity(i);
     }
 
@@ -36,22 +39,20 @@ public class SettingsActivity extends PreferenceActivity implements SharedPrefer
         if(key.equals("current_language")) {
             // Get the current language from shared preferences
             String lang = sharedPreferences.getString("current_language", "");
-            String[] languages = res.getStringArray(R.array.array_languages);
 
             Locale locale = new Locale(lang);
             Locale.setDefault(locale);
             Configuration config = new Configuration();
             config.locale = locale;
             getBaseContext().getResources().updateConfiguration(config, null);
+            String[] languages = res.getStringArray(R.array.array_languages);
 
-            Intent intent = getIntent();
-            finish();
-            startActivity(intent);
             if(lang.equals("EN")) {
                 Toast.makeText(this, String.format(res.getString(R.string.toast_language_change),languages[1]), Toast.LENGTH_SHORT).show();
             } else {
                 Toast.makeText(this, String.format(res.getString(R.string.toast_language_change),languages[0]), Toast.LENGTH_SHORT).show();
             }
+            this.recreate();
         } else if(key.equals("current_currency")) {
             // Get the current currency from shared preferences
             String curr = sharedPreferences.getString("current_currency", "");

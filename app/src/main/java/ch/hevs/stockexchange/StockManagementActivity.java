@@ -116,6 +116,18 @@ public class StockManagementActivity extends ActionBarActivity {
 
         List<Stock> stocks = datasource.getStocks(c);
 
+        // Convert value of each stock in the portfolio to current currency if needed
+        for(Stock s : stocks) {
+            double exchangerate;
+            if(s.getMarket().getSymbol().equals("SIX") && !c.getSymbol().equals("CHF")) {
+                exchangerate = datasource.getExchangeRateByCurrencies(1, (int)c.getId());
+                s.setValue(Math.round((s.getValue()*exchangerate)*100.0)/100.0);
+            } else if(s.getMarket().getSymbol().equals("DBAG") && !c.getSymbol().equals("EUR")) {
+                exchangerate = datasource.getExchangeRateByCurrencies(3, (int)c.getId());
+                s.setValue(Math.round((s.getValue()*exchangerate)*100.0)/100.0);
+            }
+        }
+
         adapter = new ArrayAdapter<>(this,android.R.layout.simple_list_item_1,stocks);
         listViewStocks.setAdapter(adapter);
 

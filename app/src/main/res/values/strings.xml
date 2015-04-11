@@ -5,8 +5,8 @@
     <string name="title_activity_my_portfolio">My Portfolio</string>
     <string name="title_activity_stock_exchange">Stock Exchange</string>
     <string name="title_activity_stock_management">Stock Management</string>
-    <string name="title_activity_manage_stock">Add Stock</string>
-    <string name="title_activity_manage_stock_update">Update Stock</string>
+    <string name="title_activity_manage_stock">Add stock (%1$s)</string>
+    <string name="title_activity_manage_stock_update">Update Stock (%1$s)</string>
     <string name="title_activity_stock_details">Stock Details</string>
     <string name="title_activity_exchange_rates">Exchange Rates</string>
 
@@ -29,7 +29,7 @@
     <string name="sd_select_broker">Select broker:</string>
     <string name="sd_button_buy">Buy</string>
 
-    <string name="sm_add_stock">Add stock</string>
+    <string name="sm_add_stock">Add stock </string>
     <string name="sm_update_stock">Update stock</string>
     <string name="ms_stock_symbol">Symbol</string>
     <string name="ms_stock_sector">Sector</string>

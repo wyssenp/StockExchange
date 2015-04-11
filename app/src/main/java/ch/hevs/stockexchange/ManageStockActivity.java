@@ -2,6 +2,7 @@ package ch.hevs.stockexchange;
 
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBarActivity;
@@ -17,6 +18,7 @@ import android.widget.Toast;
 import java.util.Locale;
 
 import ch.hevs.stockexchange.dbaccess.DatabaseAccessObject;
+import ch.hevs.stockexchange.model.Currency;
 import ch.hevs.stockexchange.model.Stock;
 
 
@@ -30,6 +32,7 @@ public class ManageStockActivity extends ActionBarActivity {
     private Button addStock;
     private DatabaseAccessObject datasource;
     private int stockId;
+    private Currency c;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +43,10 @@ public class ManageStockActivity extends ActionBarActivity {
 
         datasource = new DatabaseAccessObject(this);
         datasource.open();
+
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+        String currency = sharedPref.getString("current_currency", "");
+        c = datasource.getCurrencyById(Long.parseLong(currency));
 
         spinner_markets = (Spinner) findViewById(R.id.spinner_markets);
 
@@ -56,6 +63,7 @@ public class ManageStockActivity extends ActionBarActivity {
         addStock = (Button) findViewById(R.id.btn_addStock);
 
         Bundle b = getIntent().getExtras();
+        Resources res = getResources();
 
         /*
         Depending on whether the user creates a new stock or edits an existing stock, the appropriate listener is applied to the button
@@ -68,16 +76,16 @@ public class ManageStockActivity extends ActionBarActivity {
             editTextSymbol.setText(s.getSymbol());
             editTextName.setText(s.getName());
             editTextSector.setText(s.getSector());
-            editTextValue.setText(Double.toString(s.getValue()));
+            editTextValue.setText(Double.toString(convertMarketDefaultToUserValue(s)));
             spinner_markets.setSelection((int) (s.getMarket().getId()-1));
 
             //Change the title of the activity
-            setTitle(R.string.title_activity_manage_stock_update);
+            setTitle(String.format(res.getString(R.string.title_activity_manage_stock_update), c.getSymbol()));
 
             addStock.setText(R.string.sm_update_stock);
             addStock.setOnClickListener(new UpdateStockListener());
         } else {
-            setTitle(R.string.sm_add_stock);
+            setTitle(String.format(res.getString(R.string.title_activity_manage_stock), c.getSymbol()));
             addStock.setOnClickListener(new NewStockListener());
         }
     }
@@ -90,11 +98,12 @@ public class ManageStockActivity extends ActionBarActivity {
         @Override
         public void onClick(View v) {
             checkFields();
+            double updatedValue = convertUserValueToMarketDefault(Double.parseDouble(editTextValue.getText().toString()));
 
             datasource.writeStock(editTextSymbol.getText().toString(),
                     editTextName.getText().toString(),
                     editTextSector.getText().toString(),
-                    Double.parseDouble(editTextValue.getText().toString()),
+                    updatedValue,
                     spinner_markets.getSelectedItemPosition()+1); //Swiss market = 0, German market = 1
             datasource.close();
 
@@ -113,13 +122,14 @@ public class ManageStockActivity extends ActionBarActivity {
         @Override
         public void onClick(View v) {
             checkFields();
+            double updatedValue = convertUserValueToMarketDefault(Double.parseDouble(editTextValue.getText().toString()));
 
             //Update database
             datasource.updateStock(stockId,
                     editTextSymbol.getText().toString(),
                     editTextName.getText().toString(),
                     editTextSector.getText().toString(),
-                    Double.parseDouble(editTextValue.getText().toString()),
+                    updatedValue,
                     spinner_markets.getSelectedItemPosition()+1); //Swiss market = 0, German market = 1
 
             datasource.close();
@@ -142,6 +152,42 @@ public class ManageStockActivity extends ActionBarActivity {
             Toast.makeText(ManageStockActivity.this,R.string.toast_fieldsEmpty,Toast.LENGTH_SHORT).show();
             return;
         }
+    }
+
+    /**
+     *  Converts the value the user has set to the value of the stockmarket
+     *  Swiss market Id = 1 (default CHF), German market Id = 2 (default EUR)
+     * @param value Double of the user set value in the userspecific currency
+     * @return Double of the converted value in the default market currency
+     */
+    private double convertUserValueToMarketDefault(double value) {
+        double exchangerate;
+        if(spinner_markets.getSelectedItemPosition()+1 == 1 && !c.getSymbol().equals("CHF")) {
+            exchangerate = datasource.getExchangeRateByCurrencies((int)c.getId(), 1);
+            value = Math.round((value * exchangerate) * 100.0) / 100.0;
+        } else if(spinner_markets.getSelectedItemPosition()+1 == 2 && !c.getSymbol().equals("EUR")) {
+            exchangerate = datasource.getExchangeRateByCurrencies((int) c.getId(), 3);
+            value = Math.round((value * exchangerate) * 100.0) / 100.0;
+        }
+        return value;
+    }
+
+    /**
+     *  Converts the value of the stock to the user specified currency
+     *  Swiss market Id = 1 (default CHF), German market Id = 2 (default EUR)
+     * @param s Stock which value should be converted
+     * @return Double of the converted value in the user specified currency
+     */
+    private double convertMarketDefaultToUserValue(Stock s) {
+        double exchangerate;
+        if(s.getMarket().getSymbol().equals("SIX") && !c.getSymbol().equals("CHF")) {
+            exchangerate = datasource.getExchangeRateByCurrencies(1, (int)c.getId());
+            s.setValue(Math.round((s.getValue() * exchangerate) * 100.0) / 100.0);
+        } else if(s.getMarket().getSymbol().equals("DBAG") && !c.getSymbol().equals("EUR")) {
+            exchangerate = datasource.getExchangeRateByCurrencies(3, (int) c.getId());
+            s.setValue(Math.round((s.getValue() * exchangerate) * 100.0) / 100.0);
+        }
+        return s.getValue();
     }
 
     /**

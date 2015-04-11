@@ -73,6 +73,16 @@ public class StockDetailsActivity extends ActionBarActivity {
         stockId = b.getInt("stockId");
         s = datasource.getStockById(stockId, c);
 
+        // Converts the stock value to the current currency if needed
+        double exchangerate;
+        if(s.getMarket().getSymbol().equals("SIX") && !c.getSymbol().equals("CHF")) {
+            exchangerate = datasource.getExchangeRateByCurrencies(1, (int)c.getId());
+            s.setValue(Math.round((s.getValue() * exchangerate) * 100.0) / 100.0);
+        } else if(s.getMarket().getSymbol().equals("DBAG") && !c.getSymbol().equals("EUR")) {
+            exchangerate = datasource.getExchangeRateByCurrencies(3, (int) c.getId());
+            s.setValue(Math.round((s.getValue() * exchangerate) * 100.0) / 100.0);
+        }
+
         textViewName.setText(s.getName());
         textViewSymbol.setText(s.getSymbol());
         textViewSector.setText(s.getSector());

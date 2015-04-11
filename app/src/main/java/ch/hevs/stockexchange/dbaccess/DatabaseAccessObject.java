@@ -30,6 +30,7 @@ public class DatabaseAccessObject {
     private String[] stock_allColumns = {"stockId","Symbol","Name","Sector","StockMarket","StockValue"};
     private String[] market_allColumns = {"stockMarketId","Symbol","Name","Currency"};
     private String[] exchangeRate_allColumns = {"exchangeRateId","CurrencyFrom","CurrencyTo","ExchangeRate","ExchangeDate"};
+    private String[] exchangeRate_exchangeRateColumn = {"ExchangeRate"};
     private String[] currency_allColumns = {"currencyId","Symbol","Name"};
     private String[] broker_allColumns = {"brokerId", "Name", "BankType", "SecuritiesDealerType"};
     private String[] portfolio_allColumns = {"portfolioId", "Stock", "Broker", "Value", "Amount"};
@@ -210,6 +211,7 @@ public class DatabaseAccessObject {
     /**
      * Method used to display the correct stock when the users wishes to see the details
      * @param id The stock identifier
+     * @param currency The current currency selected in the app
      * @return A stock object
      */
     public Stock getStockById(long id, Currency currency) {
@@ -251,6 +253,7 @@ public class DatabaseAccessObject {
 
     /**
      * Method used to display all the stocks
+     * @param currency The current currency selected in the app
      * @return A generic list of all stocks in the database
      */
     public List<Stock> getStocks(Currency currency) {
@@ -272,6 +275,7 @@ public class DatabaseAccessObject {
     /**
      * Method used in the stock market activity, so that the user can filter by market
      * @param marketId The stock market identifier
+     * @param currency The current currency selected in the app
      * @return A generic list of all stocks in the database belonging to a certain market
      */
     public List<Stock> getStocksWithMarket(int marketId, Currency currency) {
@@ -296,6 +300,7 @@ public class DatabaseAccessObject {
     /**
      * Method used to convert a cursor object into a stock object
      * @param cursor The cursor
+     * @param currency The current currency selected in the app
      * @return A stock object
      */
     private Stock cursorToStock(Cursor cursor, Currency currency) {
@@ -341,6 +346,7 @@ public class DatabaseAccessObject {
     /**
      * Method used to convert a cursort object into a portfolio object
      * @param cursor The cursor
+     * @param currency The current currency selected in the app
      * @return A portfolio object
      */
     private Portfolio cursortToPortfolio(Cursor cursor, Currency currency) {
@@ -409,6 +415,13 @@ public class DatabaseAccessObject {
         return broker;
     }
 
+    /**
+     * Method used to add a specific stock to the user's portfolio
+     * @param stockId Id of the stock
+     * @param brokerId Id of the broker
+     * @param value Current stock value
+     * @param amount Amount of stock the user bought
+     */
     public void addStockToPortfolio(long stockId, long brokerId, double value, int amount) {
         ContentValues values = new ContentValues();
         values.put("Stock", stockId);
@@ -420,6 +433,7 @@ public class DatabaseAccessObject {
 
     /**
      * Method used in the myPortfolio activity in order to show the portfolio
+     * @param currency The current currency selected in the app
      * @return A generic list of the portfolio in the database
      */
     public List<Portfolio> getPortfolio(Currency currency) {
@@ -445,5 +459,21 @@ public class DatabaseAccessObject {
         String query = "DELETE FROM " + DatabaseUtility.TABLE_PORTFOLIO + " WHERE portfolioId = " + portfolioId;
 
         database.execSQL(query);
+    }
+
+    /**
+     * Method used to get the exchange rate from one currency to another
+     * @param currencyFrom From Currency
+     * @param currencyTo To Currency
+     * @return A double that represents the exchange rate
+     */
+    public double getExchangeRateByCurrencies(int currencyFrom, int currencyTo) {
+        Cursor cursor = database.query(DatabaseUtility.TABLE_EXCHANGERATE,exchangeRate_exchangeRateColumn,
+                "CurrencyFrom = ? AND CurrencyTo = ?",new String[] {String.valueOf(currencyFrom), String.valueOf(currencyTo)},null,null,null);
+
+        cursor.moveToFirst();
+        Double rate = cursor.getDouble(0);
+        cursor.close();
+        return rate;
     }
 }

@@ -93,19 +93,19 @@ public class DatabaseUtility extends SQLiteOpenHelper {
             "VALUES('SHINHAN BANK EUROPE GmbH','Ausländische Bank', 'Foreign-controlled securities deal');";
 
     private static final String TABLE_STOCK_INSERT_1 = "INSERT INTO " + TABLE_STOCK  + "(Symbol, Name, Sector, StockMarket, StockValue) "+
-            "VALUES('BAER','Julius Baer Group Ltd', 'Financials', 1, 52.8);";
+            "VALUES('BAER','Julius Baer Group Ltd', 'Financials', 1, 52.80);";
     private static final String TABLE_STOCK_INSERT_2 = "INSERT INTO " + TABLE_STOCK  + "(Symbol, Name, Sector, StockMarket, StockValue) "+
             "VALUES('CSGN','Credit Suisse Group AG', 'Financials', 1, 27.46);";
     private static final String TABLE_STOCK_INSERT_3 = "INSERT INTO " + TABLE_STOCK  + "(Symbol, Name, Sector, StockMarket, StockValue) "+
-            "VALUES('NOVN','Novartis AG', 'Health Care', 1, 101.2);";
+            "VALUES('NOVN','Novartis AG', 'Health Care', 1, 101.20);";
     private static final String TABLE_STOCK_INSERT_4 = "INSERT INTO " + TABLE_STOCK  + "(Symbol, Name, Sector, StockMarket, StockValue) "+
             "VALUES('NESN','Nestle SA', 'Consumer Staples', 1, 75.75);";
     private static final String TABLE_STOCK_INSERT_5 = "INSERT INTO " + TABLE_STOCK  + "(Symbol, Name, Sector, StockMarket, StockValue) "+
-            "VALUES('HEN3','Henkel AG & Co KGaA', 'Consumer Staples', 2, 115);";
+            "VALUES('HEN3','Henkel AG & Co KGaA', 'Consumer Staples', 2, 115.00);";
     private static final String TABLE_STOCK_INSERT_6 = "INSERT INTO " + TABLE_STOCK  + "(Symbol, Name, Sector, StockMarket, StockValue) "+
             "VALUES('ALV','Allianz SE', 'Financials', 2, 169.45);";
     private static final String TABLE_STOCK_INSERT_7 = "INSERT INTO " + TABLE_STOCK  + "(Symbol, Name, Sector, StockMarket, StockValue) "+
-            "VALUES('TKA','ThyssenKrupp AG', 'Materials', 2, 25.445);";
+            "VALUES('TKA','ThyssenKrupp AG', 'Materials', 2, 25.45);";
     private static final String TABLE_STOCK_INSERT_8 = "INSERT INTO " + TABLE_STOCK  + "(Symbol, Name, Sector, StockMarket, StockValue) "+
             "VALUES('BAYN','Bayer AG', 'Health Care', 2, 144.75);";
     private static final String TABLE_STOCK_INSERT_9 = "INSERT INTO " + TABLE_STOCK  + "(Symbol, Name, Sector, StockMarket, StockValue) "+

@@ -5,8 +5,8 @@
     <string name="title_activity_my_portfolio">Mein Portfolio</string>
     <string name="title_activity_stock_exchange">Börsenhandel</string>
     <string name="title_activity_stock_management">Aktienmanagement</string>
-    <string name="title_activity_manage_stock">Aktie Hinzufügen</string>
-    <string name="title_activity_manage_stock_update">Aktie aktualisieren</string>
+    <string name="title_activity_manage_stock">Aktie Hinzufügen (%1$s)</string>
+    <string name="title_activity_manage_stock_update">Aktie aktualisieren (%1$s)</string>
     <string name="title_activity_stock_details">Aktie: Details</string>
     <string name="title_activity_exchange_rates">Wechselkurse</string>
 
@@ -30,7 +30,7 @@
     <string name="sd_select_broker">Händler auswählen:</string>
     <string name="sd_button_buy">Kaufen</string>
 
-    <string name="sm_add_stock">Aktie hinzufügen</string>
+    <string name="sm_add_stock">Aktie hinzufügen </string>
     <string name="sm_update_stock">Aktie aktualisieren</string>
     <string name="ms_stock_symbol">Symbol</string>
     <string name="ms_stock_sector">Branche</string>

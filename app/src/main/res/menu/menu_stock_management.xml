@@ -4,7 +4,7 @@
     tools:context="ch.hevs.stockexchange.StockManagementActivity">
 
     <item android:id="@+id/action_add_stock"
-        android:title="@string/sm_add_stock"
+        android:title=""
         android:orderInCategory="100"
         app:showAsAction="ifRoom"
         android:icon="@drawable/ic_action_add_stock" />
