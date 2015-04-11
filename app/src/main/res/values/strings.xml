@@ -109,5 +109,9 @@
     <string name="settings_curr_summary">Select the prefered currency for the stock prices</string>
     <string name="settings_curr_dialog">Select currency:</string>
     <string name="settings_exch_rates">Show exchange rates</string>
+    <string name="about_text">This application has been developed in the module 644-1 choice of school 2 in the degree programme of business informatics on the  HES-SO Sierre/Siders  by two students Pierre-Alain Wyssen and Stefan Eggenschwiler.</string>
+    <string name="about_logo_desc">Logo of HES-SO Sierre/Siders</string>
+    <string name="toast_currency_change">Currency changed to: %1$s</string>
+    <string name="toast_language_change">Language changed to: %1$s</string>
 
 </resources>

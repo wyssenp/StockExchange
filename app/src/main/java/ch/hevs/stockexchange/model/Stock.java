@@ -14,6 +14,7 @@ public class Stock {
     private String name;
     private String sector;
     private Market market;
+    private Currency currency;
     private double value;
 
     public long getId() {
@@ -64,9 +65,16 @@ public class Stock {
         this.value = value;
     }
 
+    public void setCurrency(Currency currency) {
+        this.currency = currency;
+    }
+
+    public Currency getCurrency() {
+        return currency;
+    }
+
     @Override
     public String toString() {
-        //TODO Add currency
-        return name + " (" + value + ")";
+        return name + " (" + value + currency +")";
     }
 }

@@ -1,16 +1,23 @@
 package ch.hevs.stockexchange;
 
+import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import java.util.Locale;
 
 
 public class AboutActivity extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setLanguage();
         super.onCreate(savedInstanceState);
+        setTitle(R.string.settings_about);
         setContentView(R.layout.activity_about);
     }
 
@@ -35,5 +42,20 @@ public class AboutActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    /**
+     * This method sets the current application language to the selected one.
+     */
+    public void setLanguage() {
+        // Get the current language from shared preferences
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+        String lang = sharedPref.getString("current_language", "");
+
+        Locale locale = new Locale(lang);
+        Locale.setDefault(locale);
+        Configuration config = new Configuration();
+        config.locale = locale;
+        getBaseContext().getResources().updateConfiguration(config, null);
     }
 }

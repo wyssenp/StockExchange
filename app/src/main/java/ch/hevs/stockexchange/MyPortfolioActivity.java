@@ -3,7 +3,10 @@ package ch.hevs.stockexchange;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -14,8 +17,10 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import java.util.List;
+import java.util.Locale;
 
 import ch.hevs.stockexchange.dbaccess.DatabaseAccessObject;
+import ch.hevs.stockexchange.model.Currency;
 import ch.hevs.stockexchange.model.Portfolio;
 
 
@@ -25,10 +30,13 @@ public class MyPortfolioActivity extends ActionBarActivity {
     private DatabaseAccessObject datasource;
     private ArrayAdapter<Portfolio> adapter;
     private int portfolioId;
+    private Currency c;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setLanguage();
         super.onCreate(savedInstanceState);
+        setTitle(R.string.title_activity_my_portfolio);
         setContentView(R.layout.activity_my_portfolio);
         initializeList();
     }
@@ -39,7 +47,9 @@ public class MyPortfolioActivity extends ActionBarActivity {
      */
     @Override
     protected void onResume() {
+        setLanguage();
         super.onResume();
+        setTitle(R.string.title_activity_my_portfolio);
         initializeList();
     }
 
@@ -70,10 +80,14 @@ public class MyPortfolioActivity extends ActionBarActivity {
         datasource = new DatabaseAccessObject(this);
         datasource.open();
 
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+        String currency = sharedPref.getString("current_currency", "");
+        c = datasource.getCurrencyById(Long.parseLong(currency));
+
         list_myStocks = (ListView) findViewById(R.id.list_stocks);
 
         List<Portfolio> portfolios;
-        portfolios = datasource.getPortfolio();
+        portfolios = datasource.getPortfolio(c);
 
         adapter = new ArrayAdapter<>(this,android.R.layout.simple_list_item_1,portfolios);
         list_myStocks.setAdapter(adapter);
@@ -139,5 +153,20 @@ public class MyPortfolioActivity extends ActionBarActivity {
         Toast.makeText(this,R.string.toast_stockSold,Toast.LENGTH_SHORT).show();
 
         initializeList();
+    }
+
+    /**
+     * This method sets the current application language to the selected one.
+     */
+    public void setLanguage() {
+        // Get the current language from shared preferences
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+        String lang = sharedPref.getString("current_language", "");
+
+        Locale locale = new Locale(lang);
+        Locale.setDefault(locale);
+        Configuration config = new Configuration();
+        config.locale = locale;
+        getBaseContext().getResources().updateConfiguration(config, null);
     }
 }

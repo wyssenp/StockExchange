@@ -212,13 +212,13 @@ public class DatabaseAccessObject {
      * @param id The stock identifier
      * @return A stock object
      */
-    public Stock getStockById(long id) {
+    public Stock getStockById(long id, Currency currency) {
         Stock result;
 
         Cursor cursor = database.query(DatabaseUtility.TABLE_STOCK,stock_allColumns,"stockId = " + id,
                 null, null, null, null);
         cursor.moveToFirst();
-        result = cursorToStock(cursor);
+        result = cursorToStock(cursor, currency);
         cursor.close();
         return result;
     }
@@ -253,14 +253,14 @@ public class DatabaseAccessObject {
      * Method used to display all the stocks
      * @return A generic list of all stocks in the database
      */
-    public List<Stock> getStocks() {
+    public List<Stock> getStocks(Currency currency) {
         List<Stock> stocks = new ArrayList<>();
 
         Cursor cursor = database.query(DatabaseUtility.TABLE_STOCK, stock_allColumns, null, null, null, null, "stockId");
 
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
-            Stock stock = cursorToStock(cursor);
+            Stock stock = cursorToStock(cursor, currency);
             stocks.add(stock);
             cursor.moveToNext();
         }
@@ -274,7 +274,7 @@ public class DatabaseAccessObject {
      * @param marketId The stock market identifier
      * @return A generic list of all stocks in the database belonging to a certain market
      */
-    public List<Stock> getStocksWithMarket(int marketId) {
+    public List<Stock> getStocksWithMarket(int marketId, Currency currency) {
         List<Stock> stocks = new ArrayList<>();
 
         String selection = "StockMarket LIKE ?";
@@ -284,7 +284,7 @@ public class DatabaseAccessObject {
 
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
-            Stock stock = cursorToStock(cursor);
+            Stock stock = cursorToStock(cursor, currency);
             stocks.add(stock);
             cursor.moveToNext();
         }
@@ -298,7 +298,7 @@ public class DatabaseAccessObject {
      * @param cursor The cursor
      * @return A stock object
      */
-    private Stock cursorToStock(Cursor cursor) {
+    private Stock cursorToStock(Cursor cursor, Currency currency) {
         Stock stock = new Stock();
         stock.setId(cursor.getLong(0));
         stock.setSymbol(cursor.getString(1));
@@ -306,6 +306,7 @@ public class DatabaseAccessObject {
         stock.setSector(cursor.getString(3));
         stock.setMarket(getMarketById(cursor.getLong(4)));
         stock.setValue(cursor.getDouble(5));
+        stock.setCurrency(currency);
         return stock;
     }
 
@@ -342,10 +343,10 @@ public class DatabaseAccessObject {
      * @param cursor The cursor
      * @return A portfolio object
      */
-    private Portfolio cursortToPortfolio(Cursor cursor) {
+    private Portfolio cursortToPortfolio(Cursor cursor, Currency currency) {
         Portfolio portfolio = new Portfolio();
         portfolio.setId(cursor.getLong(0));
-        portfolio.setStock(getStockById(cursor.getLong(1)));
+        portfolio.setStock(getStockById(cursor.getLong(1), currency));
         portfolio.setBroker(getBrokerById(cursor.getLong(2)));
         portfolio.setValue(cursor.getDouble(3));
         portfolio.setAmount(cursor.getInt(4));
@@ -421,14 +422,14 @@ public class DatabaseAccessObject {
      * Method used in the myPortfolio activity in order to show the portfolio
      * @return A generic list of the portfolio in the database
      */
-    public List<Portfolio> getPortfolio() {
+    public List<Portfolio> getPortfolio(Currency currency) {
         List<Portfolio> portfolio = new ArrayList<>();
 
         Cursor cursor = database.query(DatabaseUtility.TABLE_PORTFOLIO,portfolio_allColumns,null,null,null,null,"portfolioId");
 
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
-            portfolio.add(cursortToPortfolio(cursor));
+            portfolio.add(cursortToPortfolio(cursor, currency));
             cursor.moveToNext();
         }
         cursor.close();

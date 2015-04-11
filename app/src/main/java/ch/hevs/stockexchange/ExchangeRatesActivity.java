@@ -1,8 +1,11 @@
 package ch.hevs.stockexchange;
 
 import android.app.ActionBar;
-import android.support.v7.app.ActionBarActivity;
+import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.ViewGroup;
@@ -15,6 +18,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import ch.hevs.stockexchange.dbaccess.DatabaseAccessObject;
 import ch.hevs.stockexchange.model.ExchangeRate;
@@ -26,7 +30,9 @@ public class ExchangeRatesActivity extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setLanguage();
         super.onCreate(savedInstanceState);
+        setTitle(R.string.title_activity_exchange_rates);
         setContentView(R.layout.activity_exchange_rates);
 
         TableLayout table = (TableLayout) findViewById(R.id.tableExchangeRates);
@@ -61,14 +67,18 @@ public class ExchangeRatesActivity extends ActionBarActivity {
 
             TextView tv_date = new TextView(this);
             tv_date.setPadding(5,5,5,5);
-            //TODO Make a check on the language of the phone and set the appropriate formatter
-            //SimpleDateFormat formatterGerman = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
-            SimpleDateFormat formatterDefault = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss a");
+            String locale = this.getResources().getConfiguration().locale.getDisplayName();
+            SimpleDateFormat formatter;
+            if(locale.equals("English")) {
+                formatter = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss a");
+            } else {
+                formatter = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
+            }
             SimpleDateFormat input = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             String dateInString = rates.get(i).getDate();
             try {
                 Date date = input.parse(dateInString);
-                tv_date.setText(formatterDefault.format(date));
+                tv_date.setText(formatter.format(date));
             } catch(ParseException e) {
                 e.printStackTrace();
             }
@@ -99,5 +109,20 @@ public class ExchangeRatesActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    /**
+     * This method sets the current application language to the selected one.
+     */
+    public void setLanguage() {
+        // Get the current language from shared preferences
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+        String lang = sharedPref.getString("current_language", "");
+
+        Locale locale = new Locale(lang);
+        Locale.setDefault(locale);
+        Configuration config = new Configuration();
+        config.locale = locale;
+        getBaseContext().getResources().updateConfiguration(config, null);
     }
 }

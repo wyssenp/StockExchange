@@ -1,7 +1,10 @@
 package ch.hevs.stockexchange;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
@@ -13,8 +16,10 @@ import android.widget.ListView;
 import android.widget.Spinner;
 
 import java.util.List;
+import java.util.Locale;
 
 import ch.hevs.stockexchange.dbaccess.DatabaseAccessObject;
+import ch.hevs.stockexchange.model.Currency;
 import ch.hevs.stockexchange.model.Stock;
 
 
@@ -25,10 +30,13 @@ public class StockExchangeActivity extends ActionBarActivity {
     private DatabaseAccessObject datasource;
     private ArrayAdapter<Stock> adapter;
     private int stockId;
+    private Currency c;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setLanguage();
         super.onCreate(savedInstanceState);
+        setTitle(R.string.title_activity_stock_exchange);
         setContentView(R.layout.activity_stock_exchange);
 
         /*
@@ -68,7 +76,9 @@ public class StockExchangeActivity extends ActionBarActivity {
 
     @Override
     protected void onResume() {
+        setLanguage();
         super.onResume();
+        setTitle(R.string.title_activity_stock_exchange);
         initializeList(0);
     }
 
@@ -90,16 +100,19 @@ public class StockExchangeActivity extends ActionBarActivity {
         datasource = new DatabaseAccessObject(this);
         datasource.open();
 
-        list_stocks = (ListView) findViewById(R.id.list_stocks);
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+        String currency = sharedPref.getString("current_currency", "");
+        c = datasource.getCurrencyById(Long.parseLong(currency));
 
         List<Stock> stocks;
         if(marketId == 0) {
-            stocks = datasource.getStocks();
+            stocks = datasource.getStocks(c);
         } else {
-            stocks = datasource.getStocksWithMarket(marketId);
+            stocks = datasource.getStocksWithMarket(marketId, c);
         }
 
         adapter = new ArrayAdapter<>(this,android.R.layout.simple_list_item_1,stocks);
+        list_stocks = (ListView) findViewById(R.id.list_stocks);
         list_stocks.setAdapter(adapter);
 
         list_stocks.setOnItemClickListener(new MyListViewOnClickListener());
@@ -120,5 +133,20 @@ public class StockExchangeActivity extends ActionBarActivity {
         int id = item.getItemId();
 
         return super.onOptionsItemSelected(item);
+    }
+
+    /**
+     * This method sets the current application language to the selected one.
+     */
+    public void setLanguage() {
+        // Get the current language from shared preferences
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+        String lang = sharedPref.getString("current_language", "");
+
+        Locale locale = new Locale(lang);
+        Locale.setDefault(locale);
+        Configuration config = new Configuration();
+        config.locale = locale;
+        getBaseContext().getResources().updateConfiguration(config, null);
     }
 }
