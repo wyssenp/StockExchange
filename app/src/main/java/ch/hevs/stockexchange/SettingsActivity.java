@@ -11,6 +11,7 @@ import android.widget.Toast;
 import java.util.Locale;
 
 
+@SuppressWarnings("ALL")
 public class SettingsActivity extends PreferenceActivity implements SharedPreferences.OnSharedPreferenceChangeListener{
 
     @Override

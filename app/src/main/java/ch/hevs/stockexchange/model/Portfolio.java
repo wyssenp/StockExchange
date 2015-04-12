@@ -46,6 +46,6 @@ public class Portfolio {
 
     @Override
     public String toString() {
-        return amount + "x" + stock + " - " + broker.getName();
+        return amount + "x " + stock + " - " + broker.getName();
     }
 }
