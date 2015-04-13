@@ -24,7 +24,6 @@
 
     <string name="sd_sector">Branche</string>
     <string name="sd_value">Kurs</string>
-    <string name="sd_graph">Grafik</string>
     <string name="sd_title_buy">%1$s-Aktien kaufen</string>
     <string name="sd_select_nbr">Anzahl Aktien:</string>
     <string name="sd_select_broker">Händler auswählen:</string>

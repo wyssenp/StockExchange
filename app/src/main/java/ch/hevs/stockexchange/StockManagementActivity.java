@@ -109,7 +109,7 @@ public class StockManagementActivity extends ActionBarActivity {
         datasource.open();
 
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
-        String currency = sharedPref.getString("current_currency", "");
+        String currency = sharedPref.getString("current_currency", "1");
         c = datasource.getCurrencyById(Long.parseLong(currency));
 
         listViewStocks = (ListView) findViewById(R.id.listView);
