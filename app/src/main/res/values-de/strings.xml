@@ -108,6 +108,13 @@
     <string name="about_logo_desc">Logo der HES-SO Valais//Wallis</string>
     <string name="toast_language_change">Sprache geändert zu: %1$s</string>
     <string name="toast_currency_change">Währung geändert zu: %1$s</string>
+    <string name="sd_graph">Graph</string>
+    <string name="mp_sell_dialog_title">Verkaufen: %1$s</string>
+    <string name="mp_sell_dialog_sell_btn">Verkaufen</string>
+    <string name="mp_sell_dialog_cancel_btn">Abbrechen</string>
+    <string name="mp_summary_btn">Gesamtsumme</string>
+    <string name="mp_summary_dialog_back_btn">Zurück</string>
+    <string name="mp_summary_dialog_text">Gesamtsumme: %1$s</string>
 
 
 </resources>

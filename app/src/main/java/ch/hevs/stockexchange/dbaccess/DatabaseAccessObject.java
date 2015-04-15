@@ -452,7 +452,22 @@ public class DatabaseAccessObject {
     }
 
     /**
-     * Method used to "sell" stocks from the portfolio
+     * Method used to "sell" stocks from the portfolio. It updates the database with the new amount.
+     * @param portfolioId Id of the portfolio
+     * @param amount New stock amount
+     */
+    public void updatePortfolio(long portfolioId, int amount) {
+        ContentValues values = new ContentValues();
+        values.put("Amount",amount);
+
+        String selection = "portfolioId LIKE ?";
+        String[] selectionArgs = { String.valueOf(portfolioId) };
+
+        database.update(DatabaseUtility.TABLE_PORTFOLIO,values,selection,selectionArgs);
+    }
+
+    /**
+     * Method used to "sell" stocks from the portfolio. Used if sell amount == stock amount.
      * @param portfolioId The portfolio Id
      */
     public void deletePortfolio(long portfolioId) {

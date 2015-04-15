@@ -111,6 +111,12 @@
 
     <string name="about_text">This application has been developed in the module 644-1 choice of school 2 in the degree programme of business informatics on the  HES-SO Valais//Wallis  by two students Pierre-Alain Wyssen and Stefan Eggenschwiler.</string>
     <string name="about_logo_desc">Logo of HES-SO Valais//Wallis</string>
+    <string name="mp_sell_dialog_title">Sell: %1$s</string>
+    <string name="mp_sell_dialog_sell_btn">Sell</string>
+    <string name="mp_sell_dialog_cancel_btn">Cancel</string>
+    <string name="mp_summary_btn">Show Total</string>
+    <string name="mp_summary_dialog_back_btn">Back</string>
+    <string name="mp_summary_dialog_text">Portfolio Total: %1$s</string>
 
 
 </resources>

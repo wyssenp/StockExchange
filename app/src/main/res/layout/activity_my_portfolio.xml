@@ -16,4 +16,13 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/mp_summary_btn"
+        android:id="@+id/total_button"
+        android:layout_below="@+id/list_stocks"
+        android:layout_centerHorizontal="true" />
+
 </RelativeLayout>

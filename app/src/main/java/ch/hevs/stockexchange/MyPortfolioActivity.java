@@ -1,10 +1,12 @@
 package ch.hevs.stockexchange;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBarActivity;
@@ -13,7 +15,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
+import android.widget.NumberPicker;
 import android.widget.Toast;
 
 import java.util.List;
@@ -29,7 +33,11 @@ public class MyPortfolioActivity extends ActionBarActivity {
     private ListView list_myStocks;
     private DatabaseAccessObject datasource;
     private ArrayAdapter<Portfolio> adapter;
-    private int portfolioId;
+    private Dialog sellDialog;
+    private NumberPicker sellPicker;
+    private List<Portfolio> portfolios;
+    private Portfolio selectedPortfolio;
+    private Button total_btn;
     private Currency c;
 
     @Override
@@ -38,7 +46,14 @@ public class MyPortfolioActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setTitle(R.string.title_activity_my_portfolio);
         setContentView(R.layout.activity_my_portfolio);
+        total_btn = (Button) findViewById(R.id.total_button);
         initializeList();
+        total_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                createTotalDialog().show();
+            }
+        });
     }
 
     /**
@@ -86,7 +101,6 @@ public class MyPortfolioActivity extends ActionBarActivity {
 
         list_myStocks = (ListView) findViewById(R.id.list_stocks);
 
-        List<Portfolio> portfolios;
         portfolios = datasource.getPortfolio(c);
 
         // Convert value of each stock in the portfolio to current currency if needed
@@ -110,8 +124,7 @@ public class MyPortfolioActivity extends ActionBarActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 //Log.d("getItem(position)",parent.getAdapter().getItem(position).toString());
 
-                Portfolio p = (Portfolio) (parent.getAdapter().getItem(position));
-                portfolioId = (int) p.getId();
+                selectedPortfolio = (Portfolio) (parent.getAdapter().getItem(position));
                 parent.getItemAtPosition(position);
 
                 createChooseDialog();
@@ -136,7 +149,6 @@ public class MyPortfolioActivity extends ActionBarActivity {
         dialog.setCancelable(true);
         dialog.setItems(R.array.mp_dialog_choices, clickListener);
         dialog.show();
-
     }
 
     /**
@@ -150,7 +162,9 @@ public class MyPortfolioActivity extends ActionBarActivity {
             switch(which) {
                 case 0: //Delete
                     //Remove stock from the database
-                    sellStock(portfolioId);
+                    //sellStock(portfolioId);
+                    dialog.dismiss();
+                    createSellDialog().show();
                     break;
                 case 1: //Cancel
                     dialog.dismiss();
@@ -159,18 +173,80 @@ public class MyPortfolioActivity extends ActionBarActivity {
         }
     }
 
-    private void sellStock(int portfolioId) {
-        datasource.deletePortfolio(portfolioId);
-
+    /**
+     * Method used by the sell dialog in order to update the portfolio.
+     */
+    private void sellStock() {
+        if(selectedPortfolio.getAmount() > sellPicker.getValue()) {
+            datasource.updatePortfolio(selectedPortfolio.getId(), selectedPortfolio.getAmount()-sellPicker.getValue());
+        } else {
+            datasource.deletePortfolio(selectedPortfolio.getId());
+        }
         Toast.makeText(this,R.string.toast_stockSold,Toast.LENGTH_SHORT).show();
 
         initializeList();
     }
 
     /**
+     * Initializes the sell dialog.
+     * @return Builder of the dialog
+     */
+    private AlertDialog.Builder createSellDialog() {
+        Resources res = getResources();
+        sellPicker = new NumberPicker(MyPortfolioActivity.this);
+        sellPicker.setMinValue(1);
+        sellPicker.setMaxValue(selectedPortfolio.getAmount());
+        sellPicker.setWrapSelectorWheel(true);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(String.format(res.getString(R.string.mp_sell_dialog_title), selectedPortfolio.getStock().getName()));
+        builder.setView(sellPicker);
+        builder.setCancelable(true);
+
+        builder.setPositiveButton(R.string.mp_sell_dialog_sell_btn, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                sellStock();
+            }
+        });
+
+        builder.setNegativeButton(R.string.mp_sell_dialog_cancel_btn, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) { }
+        });
+        return builder;
+    }
+
+    /**
+     * Initializes the total value of portfolio dialog.
+     * @return Builder of the dialog
+     */
+    private AlertDialog.Builder createTotalDialog() {
+        Resources res = getResources();
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(String.format(res.getString(R.string.mp_summary_dialog_text), Double.toString(calculateTotal()) + c.toString()));
+        builder.setCancelable(true);
+
+        builder.setNegativeButton(R.string.mp_summary_dialog_back_btn, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) { }
+        });
+        return builder;
+    }
+
+    /**
+     * Function for calculating the total for the portfolio.
+     * @return Double of the total
+     */
+    private double calculateTotal() {
+        double total = 0.0;
+        for(Portfolio p : portfolios) {
+            total += (p.getAmount() * p.getStock().getValue());
+        }
+        return (Math.round(total * 100.0) / 100.0);
+    }
+
+    /**
      * This method sets the current application language to the selected one.
      */
-    public void setLanguage() {
+    private void setLanguage() {
         // Get the current language from shared preferences
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
         String lang = sharedPref.getString("current_language", "");
