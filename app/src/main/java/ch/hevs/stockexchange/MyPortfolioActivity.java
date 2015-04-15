@@ -20,6 +20,7 @@ import android.widget.ListView;
 import android.widget.NumberPicker;
 import android.widget.Toast;
 
+import java.text.NumberFormat;
 import java.util.List;
 import java.util.Locale;
 
@@ -38,6 +39,7 @@ public class MyPortfolioActivity extends ActionBarActivity {
     private List<Portfolio> portfolios;
     private Portfolio selectedPortfolio;
     private Button total_btn;
+    private NumberFormat currencyFormat;
     private Currency c;
 
     @Override
@@ -222,7 +224,7 @@ public class MyPortfolioActivity extends ActionBarActivity {
     private AlertDialog.Builder createTotalDialog() {
         Resources res = getResources();
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle(String.format(res.getString(R.string.mp_summary_dialog_text), Double.toString(calculateTotal()) + c.toString()));
+        builder.setTitle(String.format(res.getString(R.string.mp_summary_dialog_text), calculateTotal() + c.toString()));
         builder.setCancelable(true);
 
         builder.setNegativeButton(R.string.mp_summary_dialog_back_btn, new DialogInterface.OnClickListener() {
@@ -235,16 +237,17 @@ public class MyPortfolioActivity extends ActionBarActivity {
      * Function for calculating the total for the portfolio.
      * @return Double of the total
      */
-    private double calculateTotal() {
+    private String calculateTotal() {
         double total = 0.0;
         for(Portfolio p : portfolios) {
             total += (p.getAmount() * p.getStock().getValue());
         }
-        return (Math.round(total * 100.0) / 100.0);
+        return currencyFormat.format(Math.round(total * 100.0) / 100.0);
     }
 
     /**
-     * This method sets the current application language to the selected one.
+     * This method sets the current application language to the selected one and sets the
+     * number format of the portfolio total.
      */
     private void setLanguage() {
         // Get the current language from shared preferences
@@ -256,5 +259,6 @@ public class MyPortfolioActivity extends ActionBarActivity {
         Configuration config = new Configuration();
         config.locale = locale;
         getBaseContext().getResources().updateConfiguration(config, null);
+        currencyFormat = NumberFormat.getNumberInstance(locale);
     }
 }
