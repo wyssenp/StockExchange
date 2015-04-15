@@ -216,7 +216,7 @@ public class MyPortfolioActivity extends ActionBarActivity {
     }
 
     /**
-     * Initializes the total value of portfolio dialog.
+     * Initializes the total value of the portfolio dialog.
      * @return Builder of the dialog
      */
     private AlertDialog.Builder createTotalDialog() {
