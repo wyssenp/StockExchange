@@ -40,6 +40,10 @@ public class Portfolio {
         this.value = value;
     }
 
+    public double getValue() {
+        return value;
+    }
+
     public int getAmount() {
         return amount;
     }

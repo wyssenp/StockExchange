@@ -66,7 +66,9 @@ public class DatabaseUtility extends SQLiteOpenHelper {
             "Broker INTEGER NOT NULL,"+
             "Value INTEGER NOT NULL,"+
             "Amount INTEGER NOT NULL,"+
-            "FOREIGN KEY(Stock) REFERENCES " + TABLE_STOCK + "(stockId),"+
+            "FOREIGN KEY(Stock) REFERENCES " + TABLE_STOCK + "(stockId)" +
+                " ON DELETE CASCADE" +
+                " ON UPDATE CASCADE," +
             "FOREIGN KEY(Broker) REFERENCES " + TABLE_BROKER + "(brokerId));";
 
     private static final String TABLE_STOCKMARKET_INSERT_1 = "INSERT INTO " + TABLE_STOCKMARKET  + "(Symbol, Name, Currency) "+

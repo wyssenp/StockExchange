@@ -1,7 +1,6 @@
 package ch.hevs.stockexchange;
 
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -34,7 +33,6 @@ public class MyPortfolioActivity extends ActionBarActivity {
     private ListView list_myStocks;
     private DatabaseAccessObject datasource;
     private ArrayAdapter<Portfolio> adapter;
-    private Dialog sellDialog;
     private NumberPicker sellPicker;
     private List<Portfolio> portfolios;
     private Portfolio selectedPortfolio;
@@ -110,10 +108,10 @@ public class MyPortfolioActivity extends ActionBarActivity {
             double exchangerate;
             if(p.getStock().getMarket().getSymbol().equals("SIX") && !c.getSymbol().equals("CHF")) {
                 exchangerate = datasource.getExchangeRateByCurrencies(1, (int)c.getId());
-                p.getStock().setValue(Math.round((p.getStock().getValue()*exchangerate)*100.0)/100.0);
+                p.setValue(Math.round((p.getValue() * exchangerate) * 100.0) / 100.0);
             } else if(p.getStock().getMarket().getSymbol().equals("DBAG") && !c.getSymbol().equals("EUR")) {
                 exchangerate = datasource.getExchangeRateByCurrencies(3, (int)c.getId());
-                p.getStock().setValue(Math.round((p.getStock().getValue()*exchangerate)*100.0)/100.0);
+                p.setValue(Math.round((p.getValue() * exchangerate) * 100.0) / 100.0);
             }
         }
 
@@ -162,9 +160,7 @@ public class MyPortfolioActivity extends ActionBarActivity {
         @Override
         public void onClick(DialogInterface dialog, int which) {
             switch(which) {
-                case 0: //Delete
-                    //Remove stock from the database
-                    //sellStock(portfolioId);
+                case 0: //Sell
                     dialog.dismiss();
                     createSellDialog().show();
                     break;

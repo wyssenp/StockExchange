@@ -179,7 +179,7 @@ public class MainActivity extends ActionBarActivity {
     public void setLanguage() {
         // Get the current language from shared preferences
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
-        String lang = sharedPref.getString("current_language", "");
+        String lang = sharedPref.getString("current_language", "DE");
 
         Locale locale = new Locale(lang);
         Locale.setDefault(locale);

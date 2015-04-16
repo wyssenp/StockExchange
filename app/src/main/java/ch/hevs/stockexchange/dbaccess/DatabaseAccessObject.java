@@ -45,6 +45,7 @@ public class DatabaseAccessObject {
     public void open()
     {
         database = helper.getWritableDatabase();
+        database.execSQL("PRAGMA foreign_keys=ON");
     }
 
     /**
