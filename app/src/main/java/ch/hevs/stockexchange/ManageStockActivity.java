@@ -1,11 +1,9 @@
 package ch.hevs.stockexchange;
 
 import android.content.SharedPreferences;
-import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -14,14 +12,12 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import java.util.Locale;
-
 import ch.hevs.stockexchange.dbaccess.DatabaseAccessObject;
 import ch.hevs.stockexchange.model.Currency;
 import ch.hevs.stockexchange.model.Stock;
 
 
-public class ManageStockActivity extends ActionBarActivity {
+public class ManageStockActivity extends MyActionBarActivity {
 
     private Spinner spinner_markets;
     private EditText editTextSymbol;
@@ -34,8 +30,7 @@ public class ManageStockActivity extends ActionBarActivity {
     private Currency c;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        setLanguage();
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setTitle(R.string.title_activity_manage_stock);
         setContentView(R.layout.activity_manage_stock);
@@ -203,20 +198,5 @@ public class ManageStockActivity extends ActionBarActivity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_manage_stock, menu);
         return true;
-    }
-
-    /**
-     * This method sets the current application language to the selected one.
-     */
-    public void setLanguage() {
-        // Get the current language from shared preferences
-        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
-        String lang = sharedPref.getString("current_language", "");
-
-        Locale locale = new Locale(lang);
-        Locale.setDefault(locale);
-        Configuration config = new Configuration();
-        config.locale = locale;
-        getBaseContext().getResources().updateConfiguration(config, null);
     }
 }

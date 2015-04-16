@@ -2,14 +2,10 @@ package ch.hevs.stockexchange;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.res.Configuration;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
-import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -23,7 +19,6 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 import ch.hevs.stockexchange.dbaccess.DatabaseAccessObject;
 
@@ -34,7 +29,7 @@ import ch.hevs.stockexchange.dbaccess.DatabaseAccessObject;
  * Description:
  * Main activity of the app. First screen that the user sees when he launches the app, contains a main menu.
  */
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends MyActionBarActivity {
 
     private Button myPortfolio;
     private Button stockExchange;
@@ -43,8 +38,8 @@ public class MainActivity extends ActionBarActivity {
     private DatabaseAccessObject datasource;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        setLanguage();
+    public void onCreate(Bundle savedInstanceState) {
+        //setLanguage();
         super.onCreate(savedInstanceState);
         ctx = getApplicationContext();
         setContentView(R.layout.activity_main);
@@ -93,7 +88,6 @@ public class MainActivity extends ActionBarActivity {
 
     @Override
     protected void onResume() {
-        setLanguage();
         super.onResume();
     }
 
@@ -171,20 +165,5 @@ public class MainActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    /**
-     * This method sets the current application language to the selected one.
-     */
-    public void setLanguage() {
-        // Get the current language from shared preferences
-        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
-        String lang = sharedPref.getString("current_language", "DE");
-
-        Locale locale = new Locale(lang);
-        Locale.setDefault(locale);
-        Configuration config = new Configuration();
-        config.locale = locale;
-        getBaseContext().getResources().updateConfiguration(config, null);
     }
 }

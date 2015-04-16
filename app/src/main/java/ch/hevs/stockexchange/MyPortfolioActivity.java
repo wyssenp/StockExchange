@@ -8,7 +8,6 @@ import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -21,14 +20,13 @@ import android.widget.Toast;
 
 import java.text.NumberFormat;
 import java.util.List;
-import java.util.Locale;
 
 import ch.hevs.stockexchange.dbaccess.DatabaseAccessObject;
 import ch.hevs.stockexchange.model.Currency;
 import ch.hevs.stockexchange.model.Portfolio;
 
 
-public class MyPortfolioActivity extends ActionBarActivity {
+public class MyPortfolioActivity extends MyActionBarActivity {
 
     private ListView list_myStocks;
     private DatabaseAccessObject datasource;
@@ -41,8 +39,7 @@ public class MyPortfolioActivity extends ActionBarActivity {
     private Currency c;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        setLanguage();
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setTitle(R.string.title_activity_my_portfolio);
         setContentView(R.layout.activity_my_portfolio);
@@ -62,7 +59,6 @@ public class MyPortfolioActivity extends ActionBarActivity {
      */
     @Override
     protected void onResume() {
-        setLanguage();
         super.onResume();
         setTitle(R.string.title_activity_my_portfolio);
         initializeList();
@@ -234,6 +230,7 @@ public class MyPortfolioActivity extends ActionBarActivity {
      * @return Double of the total
      */
     private String calculateTotal() {
+        setCurrencyFormat();
         double total = 0.0;
         for(Portfolio p : portfolios) {
             total += (p.getAmount() * p.getStock().getValue());
@@ -241,20 +238,13 @@ public class MyPortfolioActivity extends ActionBarActivity {
         return currencyFormat.format(Math.round(total * 100.0) / 100.0);
     }
 
-    /**
-     * This method sets the current application language to the selected one and sets the
-     * number format of the portfolio total.
-     */
-    private void setLanguage() {
-        // Get the current language from shared preferences
-        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
-        String lang = sharedPref.getString("current_language", "");
 
-        Locale locale = new Locale(lang);
-        Locale.setDefault(locale);
-        Configuration config = new Configuration();
-        config.locale = locale;
-        getBaseContext().getResources().updateConfiguration(config, null);
-        currencyFormat = NumberFormat.getNumberInstance(locale);
+    /**
+     * This method sets the number format of the portfolio total.
+     */
+    private void setCurrencyFormat() {
+        Configuration config = getBaseContext().getResources().getConfiguration();
+
+        currencyFormat = NumberFormat.getNumberInstance(config.locale);
     }
 }
