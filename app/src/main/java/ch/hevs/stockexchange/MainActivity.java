@@ -39,7 +39,6 @@ public class MainActivity extends MyActionBarActivity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        //setLanguage();
         super.onCreate(savedInstanceState);
         ctx = getApplicationContext();
         setContentView(R.layout.activity_main);
@@ -48,18 +47,26 @@ public class MainActivity extends MyActionBarActivity {
         stockExchange = (Button) findViewById(R.id.btn_stockExchange);
         stockManagement = (Button) findViewById(R.id.btn_stockMgmt);
 
-        //Check if the phone is online or not; if not, the async task will not be executed
-        //Source: http://stackoverflow.com/questions/1560788/how-to-check-internet-access-on-android-inetaddress-never-timeouts
-        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo netInfo = cm.getActiveNetworkInfo();
-        if(netInfo != null && netInfo.isConnectedOrConnecting()) {
-            //Update the database with the most current exchange rates
-            new DownloadTask().execute();
-            Toast.makeText(ctx,R.string.toast_updateSucessfull,Toast.LENGTH_LONG).show();
-        } else {
-            Toast.makeText(ctx,R.string.toast_noNetwork,Toast.LENGTH_LONG).show();
+        if(getIntent().getBooleanExtra("inapp_navigation", false)) {
+            Intent i = new Intent(this, MainActivity.class);
+            i.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            i.putExtra("no_download", true);
+            finish();
+            startActivity(i);
+        } else if(savedInstanceState == null && !getIntent().getBooleanExtra("no_download", false)) {
+            //Check if the phone is online or not; if not, the async task will not be executed
+            //Source: http://stackoverflow.com/questions/1560788/how-to-check-internet-access-on-android-inetaddress-never-timeouts
+            ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+            NetworkInfo netInfo = cm.getActiveNetworkInfo();
+            if(netInfo != null && netInfo.isConnectedOrConnecting()) {
+                //Update the database with the most current exchange rates
+                new DownloadTask().execute();
+                Toast.makeText(ctx,R.string.toast_updateSucessfull,Toast.LENGTH_LONG).show();
+            } else {
+                Toast.makeText(ctx,R.string.toast_noNetwork,Toast.LENGTH_LONG).show();
+            }
         }
-
 
         myPortfolio.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -84,11 +91,6 @@ public class MainActivity extends MyActionBarActivity {
                 startActivity(i);
             }
         });
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
     }
 
     /**
@@ -163,7 +165,6 @@ public class MainActivity extends MyActionBarActivity {
             startActivity(i);
             return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 }
