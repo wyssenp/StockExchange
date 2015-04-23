@@ -340,7 +340,7 @@ public class DatabaseAccessObject {
         broker.setId(cursor.getLong(0));
         broker.setName(cursor.getString(1));
         broker.setBankType(cursor.getString(2));
-        broker.setSecuritesDealerType(cursor.getString(3));
+        broker.setSecuritiesDealerType(cursor.getString(3));
         return broker;
     }
 

@@ -34,10 +34,6 @@ public class Broker {
         this.bankType = bankType;
     }
 
-    public void setSecuritesDealerType(String securitesDealerType) {
-        this.securitiesDealerType = securitesDealerType;
-    }
-
     @Override
     public String toString() {
         return this.name;
