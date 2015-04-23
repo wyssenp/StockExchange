@@ -140,7 +140,7 @@ public class BrokerManagementActivity extends ActionBarActivity {
             switch(which) {
                 case 0: //Edit
                     //Open ManageStockActivity with the corresponding data
-                    Intent i = new Intent(BrokerManagementActivity.this,ManageStockActivity.class);
+                    Intent i = new Intent(BrokerManagementActivity.this,ManageBrokerActivity.class);
                     i.putExtra("brokerId",brokerId);
                     startActivity(i);
                     break;

@@ -16,6 +16,7 @@
     <string name="main_myPortfolio">Mein Portfolio</string>
     <string name="main_stockExchange">Börsenhandel</string>
     <string name="main_stockMgmt">Aktienverwaltung</string>
+    <string name="main_brokerMgmt">Händlerverwaltung</string>
 
     <string name="se_markets">Markt auswählen:</string>
     <string name="se_stocks">Verfügbare Aktien:</string>

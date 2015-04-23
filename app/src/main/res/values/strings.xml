@@ -18,6 +18,7 @@
     <string name="main_myPortfolio">My portfolio</string>
     <string name="main_stockExchange">Stock exchange</string>
     <string name="main_stockMgmt">Stock management</string>
+    <string name="main_brokerMgmt">Broker management</string>
 
     <string name="se_markets">Select market:</string>
     <string name="se_stocks">Available stocks:</string>

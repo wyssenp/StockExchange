@@ -34,6 +34,7 @@ public class MainActivity extends MyActionBarActivity {
     private Button myPortfolio;
     private Button stockExchange;
     private Button stockManagement;
+    private Button brokerManagement;
     private Context ctx;
     private DatabaseAccessObject datasource;
 
@@ -46,6 +47,7 @@ public class MainActivity extends MyActionBarActivity {
         myPortfolio = (Button) findViewById(R.id.btn_myPortfolio);
         stockExchange = (Button) findViewById(R.id.btn_stockExchange);
         stockManagement = (Button) findViewById(R.id.btn_stockMgmt);
+        brokerManagement = (Button) findViewById(R.id.btn_brokerMgmt);
 
         if(getIntent().getBooleanExtra("inapp_navigation", false)) {
             Intent i = new Intent(this, MainActivity.class);
@@ -88,6 +90,14 @@ public class MainActivity extends MyActionBarActivity {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(ctx, StockManagementActivity.class);
+                startActivity(i);
+            }
+        });
+
+        brokerManagement.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(ctx, BrokerManagementActivity.class);
                 startActivity(i);
             }
         });

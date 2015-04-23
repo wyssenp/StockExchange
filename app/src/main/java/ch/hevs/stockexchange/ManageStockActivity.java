@@ -39,7 +39,7 @@ public class ManageStockActivity extends MyActionBarActivity {
         datasource.open();
 
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
-        String currency = sharedPref.getString("current_currency", "");
+        String currency = sharedPref.getString("current_currency", "1");
         c = datasource.getCurrencyById(Long.parseLong(currency));
 
         spinner_markets = (Spinner) findViewById(R.id.spinner_markets);
