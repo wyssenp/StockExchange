@@ -14,7 +14,9 @@
         <init-param>
             <param-name>services</param-name>
             <param-value>ch.hevs.stockexchange.backend.MyEndpoint,
-                ch.hevs.stockexchange.backend.ExchangeRateModelEndpoint</param-value>
+                ch.hevs.stockexchange.backend.ExchangeRateModelEndpoint,
+                ch.hevs.stockexchange.backend.BrokerModelEndpoint,
+                ch.hevs.stockexchange.backend.CurrencyModelEndpoint</param-value>
         </init-param>
     </servlet>
     <servlet-mapping>

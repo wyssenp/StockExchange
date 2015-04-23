@@ -3,6 +3,9 @@ package ch.hevs.stockexchange.backend;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
 
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+
 /**
  * Created by Pierre-Alain Wyssen on 23.04.2015.
  * Project: StockExchange
@@ -14,8 +17,8 @@ public class ExchangeRateModel {
 
     @Id
     private Long id;
-    private String from;
-    private String to;
+    private CurrencyModel from;
+    private CurrencyModel to;
     private double rate;
     private String date;
 
@@ -27,19 +30,19 @@ public class ExchangeRateModel {
         this.id = id;
     }
 
-    public String getFrom() {
+    public CurrencyModel getFrom() {
         return from;
     }
 
-    public void setFrom(String from) {
+    public void setFrom(CurrencyModel from) {
         this.from = from;
     }
 
-    public String getTo() {
+    public CurrencyModel getTo() {
         return to;
     }
 
-    public void setTo(String to) {
+    public void setTo(CurrencyModel to) {
         this.to = to;
     }
 
