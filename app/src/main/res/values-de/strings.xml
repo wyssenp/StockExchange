@@ -115,6 +115,16 @@
     <string name="mp_summary_btn">Gesamtsumme</string>
     <string name="mp_summary_dialog_back_btn">Zurück</string>
     <string name="mp_summary_dialog_text">Gesamtsumme: %1$s</string>
+    <string name="title_activity_broker_management">Händlermanagement</string>
+    <string name="se_broker">Verfügbare Händler:</string>
+    <string name="toast_broakerDeleted">Händler wurde erfolgreich gelöscht!</string>
+    <string name="toast_brokerCreated">Händler wurde erfolgreich hinzugefügt!</string>
+    <string name="toast_brokerUpdated">Händler wurde erfolgreich aktualisiert!</string>
+    <string name="title_activity_manage_broker">Händler hinzufügen</string>
+    <string name="title_activity_manage_broker_update">Händler aktualisieren</string>
+    <string name="mb_broker_bankType">Bank Typ</string>
+    <string name="mb_broker_btn_add">Händler hinzufügen</string>
+    <string name="mb_broker_securitiesDealerType">Effektenhändler Typ</string>
 
 
 </resources>

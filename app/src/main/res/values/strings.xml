@@ -6,7 +6,7 @@
     <string name="title_activity_stock_exchange">Stock Exchange</string>
     <string name="title_activity_stock_management">Stock Management</string>
     <string name="title_activity_manage_stock">Add stock (%1$s)</string>
-    <string name="title_activity_manage_stock_update">Update Stock (%1$s)</string>
+    <string name="title_activity_manage_stock_update">Update stock (%1$s)</string>
     <string name="title_activity_stock_details">Stock Details</string>
     <string name="title_activity_exchange_rates">Exchange Rates</string>
     <string name="title_activity_settings">Settings</string>
@@ -117,6 +117,17 @@
     <string name="mp_summary_btn">Show Total</string>
     <string name="mp_summary_dialog_back_btn">Back</string>
     <string name="mp_summary_dialog_text">Portfolio Total: %1$s</string>
+    <string name="title_activity_broker_management">Broker Management</string>
+    <string name="se_broker">Available broker:</string>
+    <string name="toast_brokerCreated">Broker successfully created!</string>
+    <string name="toast_broakerDeleted">Broker successfully deleted!</string>
+    <string name="toast_brokerUpdated">Broker successfully updated!</string>
+    <string name="title_activity_manage_broker">Add broker</string>
+    <string name="title_activity_manage_broker_update">Update broker</string>
+    <string name="mb_broker_btn_add">Add broker</string>
+    <string name="mb_broker_name" translatable="false">Name</string>
+    <string name="mb_broker_bankType">Bank type</string>
+    <string name="mb_broker_securitiesDealerType">Securities dealer type</string>
 
 
 </resources>

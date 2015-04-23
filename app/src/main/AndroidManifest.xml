@@ -93,6 +93,22 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="ch.hevs.stockexchange.SettingsActivity" />
         </activity>
+        <activity
+            android:name=".BrokerManagementActivity"
+            android:label="@string/title_activity_broker_management"
+            android:parentActivityName=".MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="ch.hevs.stockexchange.MainActivity" />
+        </activity>
+        <activity
+            android:name=".ManageBrokerActivity"
+            android:label="@string/title_activity_manage_broker"
+            android:parentActivityName=".BrokerManagementActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="ch.hevs.stockexchange.BrokerManagementActivity" />
+        </activity>
     </application>
 
 </manifest>

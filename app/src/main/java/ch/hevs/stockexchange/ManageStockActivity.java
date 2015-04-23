@@ -91,7 +91,9 @@ public class ManageStockActivity extends MyActionBarActivity {
     private class NewStockListener implements View.OnClickListener {
         @Override
         public void onClick(View v) {
-            checkFields();
+            if(!checkFields()) {
+                return;
+            }
             double updatedValue = convertUserValueToMarketDefault(Double.parseDouble(editTextValue.getText().toString()));
 
             datasource.writeStock(editTextSymbol.getText().toString(),
@@ -115,7 +117,9 @@ public class ManageStockActivity extends MyActionBarActivity {
     private class UpdateStockListener implements View.OnClickListener {
         @Override
         public void onClick(View v) {
-            checkFields();
+            if(!checkFields()) {
+                return;
+            }
             double updatedValue = convertUserValueToMarketDefault(Double.parseDouble(editTextValue.getText().toString()));
 
             //Update database
@@ -139,13 +143,14 @@ public class ManageStockActivity extends MyActionBarActivity {
     /**
      * Helper method that makes sure that all fields (EditText) are filled
      */
-    private void checkFields() {
+    private boolean checkFields() {
         //If any of the text fields are empty, the user is informed
         if(isEmpty(editTextSymbol)||isEmpty(editTextName)||
                 isEmpty(editTextSector)||isEmpty(editTextValue)) {
             Toast.makeText(ManageStockActivity.this,R.string.toast_fieldsEmpty,Toast.LENGTH_SHORT).show();
-            return;
+            return false;
         }
+        return true;
     }
 
     /**

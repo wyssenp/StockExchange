@@ -417,6 +417,49 @@ public class DatabaseAccessObject {
     }
 
     /**
+     * Method used to insert a broker into the database
+     * @param brokerName Name of the broker
+     * @param bankType Bank type of the broaker
+     * @param securitiesDealerType securities dealer type of the broker
+     */
+    public void createBroker(String brokerName, String bankType, String securitiesDealerType) {
+        ContentValues values = new ContentValues();
+        values.put("Name", brokerName);
+        values.put("BankType", bankType);
+        values.put("SecuritiesDealerType", securitiesDealerType);
+        database.insert(DatabaseUtility.TABLE_STOCK, null, values);
+    }
+
+    /**
+     * Method used to update a broker in the database
+     * @param brokerId Id of the broker
+     * @param brokerName Name of the broker
+     * @param bankType Bank type of the broaker
+     * @param securitiesDealerType securities dealer type of the broker
+     */
+    public void updateBroker(int brokerId, String brokerName, String bankType, String securitiesDealerType) {
+        ContentValues values = new ContentValues();
+        values.put("Name", brokerName);
+        values.put("BankType", bankType);
+        values.put("SecuritiesDealerType", securitiesDealerType);
+
+        String selection = "brokerId LIKE ?";
+        String[] selectionArgs = { String.valueOf(brokerId) };
+
+        database.update(DatabaseUtility.TABLE_BROKER,values,selection,selectionArgs);
+    }
+
+    /**
+     * Method used to delete a broker from the database
+     * @param brokerId Id of the broker
+     */
+    public void deleteBroker(int brokerId) {
+        String query = "DELETE FROM " + DatabaseUtility.TABLE_BROKER + " WHERE brokerId = " + brokerId;
+
+        database.execSQL(query);
+    }
+
+    /**
      * Method used to add a specific stock to the user's portfolio
      * @param stockId Id of the stock
      * @param brokerId Id of the broker

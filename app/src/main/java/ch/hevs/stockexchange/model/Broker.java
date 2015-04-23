@@ -12,7 +12,7 @@ public class Broker {
     private long id;
     private String name;
     private String bankType;
-    private String securitesDealerType;
+    private String securitiesDealerType;
 
     public long getId() {
         return id;
@@ -35,11 +35,23 @@ public class Broker {
     }
 
     public void setSecuritesDealerType(String securitesDealerType) {
-        this.securitesDealerType = securitesDealerType;
+        this.securitiesDealerType = securitesDealerType;
     }
 
     @Override
     public String toString() {
         return this.name;
+    }
+
+    public String getBankType() {
+        return bankType;
+    }
+
+    public String getSecuritiesDealerType() {
+        return securitiesDealerType;
+    }
+
+    public void setSecuritiesDealerType(String securitiesDealerType) {
+        this.securitiesDealerType = securitiesDealerType;
     }
 }
