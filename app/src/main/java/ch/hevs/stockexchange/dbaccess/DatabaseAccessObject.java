@@ -1,5 +1,6 @@
 package ch.hevs.stockexchange.dbaccess;
 
+import android.app.Application;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -9,6 +10,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import java.util.ArrayList;
 import java.util.List;
 
+import ch.hevs.stockexchange.BrokerManagementActivity;
 import ch.hevs.stockexchange.model.Broker;
 import ch.hevs.stockexchange.model.Currency;
 import ch.hevs.stockexchange.model.ExchangeRate;
@@ -56,11 +58,11 @@ public class DatabaseAccessObject {
         helper.close();
     }
 
-    public boolean hasDataToUpload() {
+    /*public boolean hasDataToUpload() {
         int nb = selectAllToUpload().getCount();
 
         return nb != 0;
-    }
+    }*/
 
     private Cursor selectAllToUpload() {
         String sql = "SELECT * FROM " + DatabaseUtility.TABLE_BROKER + "WHERE Uploaded = 'FALSE'";

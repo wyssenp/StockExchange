@@ -1,8 +1,11 @@
 package ch.hevs.stockexchange;
 
 import android.content.res.Resources;
+import android.database.Cursor;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Pair;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -10,6 +13,15 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.api.client.extensions.android.http.AndroidHttp;
+import com.google.api.client.extensions.android.json.AndroidJsonFactory;
+import com.google.api.client.googleapis.services.AbstractGoogleClientRequest;
+import com.google.api.client.googleapis.services.GoogleClientRequestInitializer;
+
+import java.io.IOException;
+
+import ch.hevs.stockexchange.backend.brokerModelApi.BrokerModelApi;
+import ch.hevs.stockexchange.backend.brokerModelApi.model.BrokerModel;
 import ch.hevs.stockexchange.dbaccess.DatabaseAccessObject;
 import ch.hevs.stockexchange.model.Broker;
 
@@ -75,12 +87,21 @@ public class ManageBrokerActivity extends ActionBarActivity {
                 return;
             }
 
+            //Update database
             datasource.createBroker(
                     editTextName.getText().toString(),
                     editTextBankType.getText().toString(),
                     editTextSecuritiesDealerType.getText().toString());
 
             datasource.close();
+
+            BrokerModel brokerDS = new BrokerModel();
+            brokerDS.setName(editTextName.getText().toString());
+            brokerDS.setBankType(editTextBankType.getText().toString());
+            brokerDS.setSecuritesDealerType(editTextSecuritiesDealerType.getText().toString());
+
+            //Update datastore
+            new InsertOrUpdateBrokerTask().execute(new Pair<BrokerModel, Long>(brokerDS, null));
 
             Toast.makeText(ManageBrokerActivity.this, R.string.toast_brokerCreated, Toast.LENGTH_SHORT).show();
 
@@ -107,6 +128,15 @@ public class ManageBrokerActivity extends ActionBarActivity {
                     editTextSecuritiesDealerType.getText().toString());
 
             datasource.close();
+
+            BrokerModel brokerDS = new BrokerModel();
+            brokerDS.setId((long) brokerId);
+            brokerDS.setName(editTextName.getText().toString());
+            brokerDS.setBankType(editTextBankType.getText().toString());
+            brokerDS.setSecuritesDealerType(editTextSecuritiesDealerType.getText().toString());
+
+            //Update datastore
+            new InsertOrUpdateBrokerTask().execute(new Pair<BrokerModel, Long>(brokerDS, (long) brokerId));
 
             Toast.makeText(ManageBrokerActivity.this,R.string.toast_brokerUpdated,Toast.LENGTH_SHORT).show();
 
@@ -136,6 +166,55 @@ public class ManageBrokerActivity extends ActionBarActivity {
      */
     private boolean isEmpty(EditText editText) {
         return editText.getText().toString().trim().length() == 0;
+    }
+
+    private class InsertOrUpdateBrokerTask extends AsyncTask<Pair<BrokerModel,Long>, Void, Void> {
+
+        /*
+        Possible actions:
+        save    Insert a new entry in the datastore (requires a BrokerModel object)
+        update  Updating an entry in the datastore (requires a BrokerModel object and an ID)
+         */
+
+        private BrokerModelApi myService = null;
+
+        @Override
+        protected Void doInBackground(Pair<BrokerModel,Long>... params) {
+            if (myService == null) {
+                BrokerModelApi.Builder builder = new BrokerModelApi.Builder(AndroidHttp.newCompatibleTransport(),
+                        new AndroidJsonFactory(), null)
+                        .setRootUrl("http://10.0.2.2:8080/_ah/api/")
+                        .setGoogleClientRequestInitializer(new GoogleClientRequestInitializer() {
+                            @Override
+                            public void initialize(AbstractGoogleClientRequest<?> abstractGoogleClientRequest) throws IOException {
+                                abstractGoogleClientRequest.setDisableGZipContent(true);
+                            }
+                        });
+
+                myService = builder.build();
+            }
+
+            BrokerModel broker = params[0].first;
+            Long brokerId = params[0].second;
+
+            if(brokerId == null) {
+                //When there's no Id it means that it's an Insert
+                try {
+                    myService.insert(broker).execute();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            } else {
+                //Update
+                try {
+                    myService.update(brokerId,broker).execute();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            return null;
+        }
     }
 
     @Override

@@ -93,21 +93,35 @@ public class BrokerManagementActivity extends ActionBarActivity {
             startActivity(i);
         }
 
-        if(id == R.id.action_sync_broker) {
-
-        }
-
         return super.onOptionsItemSelected(item);
     }
 
-    private class UploadClass extends AsyncTask<Void, Void, Void> {
-        BrokerModelApi myService = null;
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    private void removeBroker(int brokerId) {
+        datasource.deleteBroker(brokerId);
+
+        //Update datastore
+        new DeleteBrokerTask().execute((long) brokerId);
+
+        Toast.makeText(this, R.string.toast_brokerDeleted, Toast.LENGTH_SHORT).show();
+
+        initializeList();
+    }
+
+    private class DeleteBrokerTask extends AsyncTask<Long, Void, Void> {
+
+        private BrokerModelApi myService = null;
+
         @Override
-        protected Void doInBackground(Void... params) {
-            if(myService == null) {
-                /*BrokerModelApi.Builder builder = new BrokerModelApi.Builder(new AndroidHttp.newCompatibleTransport(),
+        protected Void doInBackground(Long... params) {
+            if (myService == null) {
+                BrokerModelApi.Builder builder = new BrokerModelApi.Builder(AndroidHttp.newCompatibleTransport(),
                         new AndroidJsonFactory(), null)
-                        .setRootUrl("http://test.com/_ah/api")
+                        .setRootUrl("http://10.0.2.2:8080/_ah/api/")
                         .setGoogleClientRequestInitializer(new GoogleClientRequestInitializer() {
                             @Override
                             public void initialize(AbstractGoogleClientRequest<?> abstractGoogleClientRequest) throws IOException {
@@ -115,18 +129,17 @@ public class BrokerManagementActivity extends ActionBarActivity {
                             }
                         });
 
-                myService = builder.build();*/
+                myService = builder.build();
             }
+
+            try {
+                myService.remove(params[0]);
+            } catch(IOException e) {
+                e.printStackTrace();
+            }
+
             return null;
         }
-    }
-
-    private void removeBroker(int brokerId) {
-        datasource.deleteBroker(brokerId);
-
-        Toast.makeText(this, R.string.toast_brokerDeleted, Toast.LENGTH_SHORT).show();
-
-        initializeList();
     }
 
     private void initializeList() {
