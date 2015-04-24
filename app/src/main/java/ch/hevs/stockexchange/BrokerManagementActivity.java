@@ -101,7 +101,7 @@ public class BrokerManagementActivity extends ActionBarActivity {
         super.onActivityResult(requestCode, resultCode, data);
     }
 
-    private void removeBroker(int brokerId) {
+    private void removeBroker() {
         datasource.deleteBroker(brokerId);
 
         //Update datastore
@@ -119,7 +119,7 @@ public class BrokerManagementActivity extends ActionBarActivity {
         @Override
         protected Void doInBackground(Long... params) {
             if (myService == null) {
-                BrokerModelApi.Builder builder = new BrokerModelApi.Builder(AndroidHttp.newCompatibleTransport(),
+                /*BrokerModelApi.Builder builder = new BrokerModelApi.Builder(AndroidHttp.newCompatibleTransport(),
                         new AndroidJsonFactory(), null)
                         .setRootUrl("http://10.0.2.2:8080/_ah/api/")
                         .setGoogleClientRequestInitializer(new GoogleClientRequestInitializer() {
@@ -127,13 +127,16 @@ public class BrokerManagementActivity extends ActionBarActivity {
                             public void initialize(AbstractGoogleClientRequest<?> abstractGoogleClientRequest) throws IOException {
                                 abstractGoogleClientRequest.setDisableGZipContent(true);
                             }
-                        });
+                        });*/
+                BrokerModelApi.Builder builder = new BrokerModelApi.Builder(AndroidHttp.newCompatibleTransport(),
+                        new AndroidJsonFactory(), null)
+                        .setRootUrl("https://stockexchange-hesso.appspot.com/_ah/api/");
 
                 myService = builder.build();
             }
 
             try {
-                myService.remove(params[0]);
+                myService.remove(params[0]).execute();
             } catch(IOException e) {
                 e.printStackTrace();
             }
@@ -191,8 +194,8 @@ public class BrokerManagementActivity extends ActionBarActivity {
                     startActivity(i);
                     break;
                 case 1: //Delete
-                    //Remove stock from the database
-                    removeBroker(brokerId);
+                    //Remove stock from the database and the datastore
+                    removeBroker();
                     break;
                 case 2: //Cancel
                     dialog.dismiss();

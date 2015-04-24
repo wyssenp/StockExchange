@@ -88,7 +88,7 @@ public class ManageBrokerActivity extends ActionBarActivity {
             }
 
             //Update database
-            datasource.createBroker(
+            long id = datasource.createBroker(
                     editTextName.getText().toString(),
                     editTextBankType.getText().toString(),
                     editTextSecuritiesDealerType.getText().toString());
@@ -96,11 +96,11 @@ public class ManageBrokerActivity extends ActionBarActivity {
             datasource.close();
 
             BrokerModel brokerDS = new BrokerModel();
+            brokerDS.setId(id);
             brokerDS.setName(editTextName.getText().toString());
             brokerDS.setBankType(editTextBankType.getText().toString());
             brokerDS.setSecuritesDealerType(editTextSecuritiesDealerType.getText().toString());
 
-            //TODO FIX
             //Update datastore
             new InsertOrUpdateBrokerTask().execute(new Pair<BrokerModel, Long>(brokerDS, null));
 
@@ -183,7 +183,7 @@ public class ManageBrokerActivity extends ActionBarActivity {
         @Override
         protected Void doInBackground(Pair<BrokerModel,Long>... params) {
             if (myService == null) {
-                BrokerModelApi.Builder builder = new BrokerModelApi.Builder(AndroidHttp.newCompatibleTransport(),
+                /*BrokerModelApi.Builder builder = new BrokerModelApi.Builder(AndroidHttp.newCompatibleTransport(),
                         new AndroidJsonFactory(), null)
                         .setRootUrl("http://10.0.2.2:8080/_ah/api/")
                         .setGoogleClientRequestInitializer(new GoogleClientRequestInitializer() {
@@ -191,7 +191,10 @@ public class ManageBrokerActivity extends ActionBarActivity {
                             public void initialize(AbstractGoogleClientRequest<?> abstractGoogleClientRequest) throws IOException {
                                 abstractGoogleClientRequest.setDisableGZipContent(true);
                             }
-                        });
+                        });*/
+                BrokerModelApi.Builder builder = new BrokerModelApi.Builder(AndroidHttp.newCompatibleTransport(),
+                        new AndroidJsonFactory(), null)
+                        .setRootUrl("https://stockexchange-hesso.appspot.com/_ah/api/");
 
                 myService = builder.build();
             }

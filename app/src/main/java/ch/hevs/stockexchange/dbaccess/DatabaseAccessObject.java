@@ -444,12 +444,12 @@ public class DatabaseAccessObject {
      * @param bankType Bank type of the broaker
      * @param securitiesDealerType securities dealer type of the broker
      */
-    public void createBroker(String brokerName, String bankType, String securitiesDealerType) {
+    public long createBroker(String brokerName, String bankType, String securitiesDealerType) {
         ContentValues values = new ContentValues();
         values.put("Name", brokerName);
         values.put("BankType", bankType);
         values.put("SecuritiesDealerType", securitiesDealerType);
-        database.insert(DatabaseUtility.TABLE_BROKER, null, values);
+        return database.insert(DatabaseUtility.TABLE_BROKER, null, values);
     }
 
     /**
