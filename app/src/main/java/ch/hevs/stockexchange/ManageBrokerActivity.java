@@ -212,7 +212,8 @@ public class ManageBrokerActivity extends ActionBarActivity {
             } else {
                 //Update
                 try {
-                    myService.update(brokerId,broker).execute();
+                    if(brokerId > 6)
+                        myService.update(brokerId,broker).execute();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

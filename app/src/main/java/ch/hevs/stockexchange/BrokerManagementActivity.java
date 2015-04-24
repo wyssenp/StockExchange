@@ -105,7 +105,8 @@ public class BrokerManagementActivity extends ActionBarActivity {
         datasource.deleteBroker(brokerId);
 
         //Update datastore
-        new DeleteBrokerTask().execute((long) brokerId);
+        if(brokerId > 6)
+            new DeleteBrokerTask().execute((long) brokerId);
 
         Toast.makeText(this, R.string.toast_brokerDeleted, Toast.LENGTH_SHORT).show();
 
