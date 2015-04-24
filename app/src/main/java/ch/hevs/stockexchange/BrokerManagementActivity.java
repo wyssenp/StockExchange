@@ -3,6 +3,7 @@ package ch.hevs.stockexchange;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
@@ -14,8 +15,15 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.google.api.client.extensions.android.http.AndroidHttp;
+import com.google.api.client.extensions.android.json.AndroidJsonFactory;
+import com.google.api.client.googleapis.services.AbstractGoogleClientRequest;
+import com.google.api.client.googleapis.services.GoogleClientRequestInitializer;
+
+import java.io.IOException;
 import java.util.List;
 
+import ch.hevs.stockexchange.backend.brokerModelApi.BrokerModelApi;
 import ch.hevs.stockexchange.dbaccess.DatabaseAccessObject;
 import ch.hevs.stockexchange.model.Broker;
 
@@ -85,7 +93,32 @@ public class BrokerManagementActivity extends ActionBarActivity {
             startActivity(i);
         }
 
+        if(id == R.id.action_sync_broker) {
+
+        }
+
         return super.onOptionsItemSelected(item);
+    }
+
+    private class UploadClass extends AsyncTask<Void, Void, Void> {
+        BrokerModelApi myService = null;
+        @Override
+        protected Void doInBackground(Void... params) {
+            if(myService == null) {
+                /*BrokerModelApi.Builder builder = new BrokerModelApi.Builder(new AndroidHttp.newCompatibleTransport(),
+                        new AndroidJsonFactory(), null)
+                        .setRootUrl("http://test.com/_ah/api")
+                        .setGoogleClientRequestInitializer(new GoogleClientRequestInitializer() {
+                            @Override
+                            public void initialize(AbstractGoogleClientRequest<?> abstractGoogleClientRequest) throws IOException {
+                                abstractGoogleClientRequest.setDisableGZipContent(true);
+                            }
+                        });
+
+                myService = builder.build();*/
+            }
+            return null;
+        }
     }
 
     private void removeBroker(int brokerId) {

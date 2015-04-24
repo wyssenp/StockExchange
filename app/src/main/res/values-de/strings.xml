@@ -44,6 +44,9 @@
     <string name="toast_fieldsEmpty">Alle Felder müssen ausgefüllt sein.</string>
     <string name="toast_updateSucessfull">Wechselkurse wurden aktualisiert!</string>
     <string name="toast_noNetwork">Um die aktuellen Wechselkurse herunterzuladen wird eine Internetverbindung benötigt!</string>
+    <string name="toast_brokerDeleted">Händler wurde erfolgreich gelöscht!</string>
+    <string name="toast_brokerCreated">Händler wurde erfolgreich hinzugefügt!</string>
+    <string name="toast_brokerUpdated">Händler wurde erfolgreich aktualisiert!</string>
 
     <string name="sm_dialog_chooseAction">Wählen Sie eine Aktion:</string>
     <string-array name="sm_dialog_choices">
@@ -118,9 +121,6 @@
     <string name="mp_summary_dialog_text">Gesamtsumme: %1$s</string>
     <string name="title_activity_broker_management">Händlermanagement</string>
     <string name="se_broker">Verfügbare Händler:</string>
-    <string name="toast_broakerDeleted">Händler wurde erfolgreich gelöscht!</string>
-    <string name="toast_brokerCreated">Händler wurde erfolgreich hinzugefügt!</string>
-    <string name="toast_brokerUpdated">Händler wurde erfolgreich aktualisiert!</string>
     <string name="title_activity_manage_broker">Händler hinzufügen</string>
     <string name="title_activity_manage_broker_update">Händler aktualisieren</string>
     <string name="mb_broker_bankType">Bank Typ</string>

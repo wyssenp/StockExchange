@@ -123,7 +123,7 @@
     <string name="mp_summary_dialog_back_btn">Back</string>
     <string name="mp_summary_dialog_text">Portfolio Total: %1$s</string>
     <string name="title_activity_broker_management">Broker Management</string>
-    <string name="se_broker">Available broker:</string>
+    <string name="se_broker">Available brokers:</string>
 
     <string name="title_activity_manage_broker">Add broker</string>
     <string name="title_activity_manage_broker_update">Update broker</string>
