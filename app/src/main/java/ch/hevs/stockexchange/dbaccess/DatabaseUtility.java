@@ -58,8 +58,7 @@ public class DatabaseUtility extends SQLiteOpenHelper {
             "(brokerId INTEGER PRIMARY KEY NOT NULL,"+
             "Name TEXT NOT NULL,"+
             "BankType TEXT NOT NULL,"+
-            "SecuritiesDealerType TEXT NOT NULL," +
-            "Uploaded BOOLEAN NOT NULL DEFAULT FALSE);";
+            "SecuritiesDealerType TEXT NOT NULL);";
 
     private static final String TABLE_PORTFOLIO_CREATE = "CREATE TABLE IF NOT EXISTS " + TABLE_PORTFOLIO +
             "(portfolioId INTEGER PRIMARY KEY NOT NULL,"+

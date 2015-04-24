@@ -13,11 +13,10 @@ import com.googlecode.objectify.annotation.Id;
 public class BrokerModel {
 
     @Id
-    private long id;
+    private Long id;
     private String name;
     private String bankType;
     private String securitesDealerType;
-    private boolean uploaded;
 
     public long getId() {
         return id;
@@ -49,13 +48,5 @@ public class BrokerModel {
 
     public void setSecuritesDealerType(String securitesDealerType) {
         this.securitesDealerType = securitesDealerType;
-    }
-
-    public boolean isUploaded() {
-        return uploaded;
-    }
-
-    public void setUploaded(boolean uploaded) {
-        this.uploaded = uploaded;
     }
 }

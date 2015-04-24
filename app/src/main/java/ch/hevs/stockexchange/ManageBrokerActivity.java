@@ -100,6 +100,7 @@ public class ManageBrokerActivity extends ActionBarActivity {
             brokerDS.setBankType(editTextBankType.getText().toString());
             brokerDS.setSecuritesDealerType(editTextSecuritiesDealerType.getText().toString());
 
+            //TODO FIX
             //Update datastore
             new InsertOrUpdateBrokerTask().execute(new Pair<BrokerModel, Long>(brokerDS, null));
 
@@ -135,6 +136,7 @@ public class ManageBrokerActivity extends ActionBarActivity {
             brokerDS.setBankType(editTextBankType.getText().toString());
             brokerDS.setSecuritesDealerType(editTextSecuritiesDealerType.getText().toString());
 
+            //TODO FIX
             //Update datastore
             new InsertOrUpdateBrokerTask().execute(new Pair<BrokerModel, Long>(brokerDS, (long) brokerId));
 

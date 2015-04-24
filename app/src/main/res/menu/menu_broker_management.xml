@@ -2,11 +2,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="ch.hevs.stockexchange.BrokerManagementActivity">
-    <item android:id="@+id/action_sync_broker"
-        android:title=""
-        android:orderInCategory="100"
-        app:showAsAction="ifRoom"
-        android:icon="@drawable/ic_action_refresh" />
 
     <item android:id="@+id/action_add_broker"
         android:title=""
