@@ -48,6 +48,10 @@
     <string name="toast_noNetwork">Please activate your network in order to get the most recent currency exchange rates!</string>
     <string name="toast_currency_change">Currency changed to: %1$s</string>
     <string name="toast_language_change">Language changed to: %1$s</string>
+    <string name="toast_brokerCreated">Broker successfully created!</string>
+    <string name="toast_brokerDeleted">Broker successfully deleted!</string>
+    <string name="toast_brokerUpdated">Broker successfully updated!</string>
+
 
     <string name="sm_dialog_chooseAction">Choose an action:</string>
     <string-array name="sm_dialog_choices">
@@ -120,9 +124,7 @@
     <string name="mp_summary_dialog_text">Portfolio Total: %1$s</string>
     <string name="title_activity_broker_management">Broker Management</string>
     <string name="se_broker">Available broker:</string>
-    <string name="toast_brokerCreated">Broker successfully created!</string>
-    <string name="toast_broakerDeleted">Broker successfully deleted!</string>
-    <string name="toast_brokerUpdated">Broker successfully updated!</string>
+
     <string name="title_activity_manage_broker">Add broker</string>
     <string name="title_activity_manage_broker_update">Update broker</string>
     <string name="mb_broker_btn_add">Add broker</string>

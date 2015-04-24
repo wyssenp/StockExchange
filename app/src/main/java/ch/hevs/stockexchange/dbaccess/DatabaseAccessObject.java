@@ -56,6 +56,26 @@ public class DatabaseAccessObject {
         helper.close();
     }
 
+    public boolean hasDataToUpload() {
+        int nb = selectAllToUpload().getCount();
+
+        return nb != 0;
+    }
+
+    private Cursor selectAllToUpload() {
+        String sql = "SELECT * FROM " + DatabaseUtility.TABLE_BROKER + "WHERE Uploaded = 'FALSE'";
+
+        return database.rawQuery(sql, null);
+    }
+
+    public void setUploadedToTrue(Long id) {
+        String sql = "UPDATE " + DatabaseUtility.TABLE_BROKER + " SET Uploaded = 'true' WHERE brokerId = " + id;
+
+        Cursor c = database.rawQuery(sql, null);
+        c.moveToFirst();
+        c.close();
+    }
+
     /**
      * Method used to display all the exchange rates
      * @return A generic list of all exchange rates in the database
@@ -427,7 +447,7 @@ public class DatabaseAccessObject {
         values.put("Name", brokerName);
         values.put("BankType", bankType);
         values.put("SecuritiesDealerType", securitiesDealerType);
-        database.insert(DatabaseUtility.TABLE_STOCK, null, values);
+        database.insert(DatabaseUtility.TABLE_BROKER, null, values);
     }
 
     /**

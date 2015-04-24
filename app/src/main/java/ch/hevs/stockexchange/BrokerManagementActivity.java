@@ -80,7 +80,7 @@ public class BrokerManagementActivity extends ActionBarActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        if(id == R.id.action_add_stock) {
+        if(id == R.id.action_add_broker) {
             Intent i = new Intent(this, ManageBrokerActivity.class);
             startActivity(i);
         }
@@ -91,7 +91,7 @@ public class BrokerManagementActivity extends ActionBarActivity {
     private void removeBroker(int brokerId) {
         datasource.deleteBroker(brokerId);
 
-        Toast.makeText(this, R.string.toast_stockDeleted, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, R.string.toast_brokerDeleted, Toast.LENGTH_SHORT).show();
 
         initializeList();
     }
