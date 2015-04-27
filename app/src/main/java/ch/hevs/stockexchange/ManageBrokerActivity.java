@@ -1,13 +1,11 @@
 package ch.hevs.stockexchange;
 
 import android.content.res.Resources;
-import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Pair;
 import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -15,8 +13,6 @@ import android.widget.Toast;
 
 import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.extensions.android.json.AndroidJsonFactory;
-import com.google.api.client.googleapis.services.AbstractGoogleClientRequest;
-import com.google.api.client.googleapis.services.GoogleClientRequestInitializer;
 
 import java.io.IOException;
 
@@ -136,7 +132,6 @@ public class ManageBrokerActivity extends ActionBarActivity {
             brokerDS.setBankType(editTextBankType.getText().toString());
             brokerDS.setSecuritesDealerType(editTextSecuritiesDealerType.getText().toString());
 
-            //TODO FIX
             //Update datastore
             new InsertOrUpdateBrokerTask().execute(new Pair<BrokerModel, Long>(brokerDS, (long) brokerId));
 
