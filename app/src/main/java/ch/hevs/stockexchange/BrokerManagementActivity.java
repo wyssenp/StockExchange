@@ -113,6 +113,9 @@ public class BrokerManagementActivity extends ActionBarActivity {
         initializeList();
     }
 
+    /**
+     * Inner class to handle the deletion of an entry on the datastore
+     */
     private class DeleteBrokerTask extends AsyncTask<Long, Void, Void> {
 
         private BrokerModelApi myService = null;
@@ -120,6 +123,7 @@ public class BrokerManagementActivity extends ActionBarActivity {
         @Override
         protected Void doInBackground(Long... params) {
             if (myService == null) {
+                //Local
                 /*BrokerModelApi.Builder builder = new BrokerModelApi.Builder(AndroidHttp.newCompatibleTransport(),
                         new AndroidJsonFactory(), null)
                         .setRootUrl("http://10.0.2.2:8080/_ah/api/")
@@ -129,6 +133,7 @@ public class BrokerManagementActivity extends ActionBarActivity {
                                 abstractGoogleClientRequest.setDisableGZipContent(true);
                             }
                         });*/
+                //Online (cloud)
                 BrokerModelApi.Builder builder = new BrokerModelApi.Builder(AndroidHttp.newCompatibleTransport(),
                         new AndroidJsonFactory(), null)
                         .setRootUrl("https://stockexchange-hesso.appspot.com/_ah/api/");

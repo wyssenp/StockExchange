@@ -170,6 +170,9 @@ public class ManageBrokerActivity extends ActionBarActivity {
         return editText.getText().toString().trim().length() == 0;
     }
 
+    /**
+     * Inner class to handle the upload on the datastore (insert or update)
+     */
     private class InsertOrUpdateBrokerTask extends AsyncTask<Pair<BrokerModel,Long>, Void, Void> {
 
         /*
@@ -183,6 +186,7 @@ public class ManageBrokerActivity extends ActionBarActivity {
         @Override
         protected Void doInBackground(Pair<BrokerModel,Long>... params) {
             if (myService == null) {
+                //Local
                 /*BrokerModelApi.Builder builder = new BrokerModelApi.Builder(AndroidHttp.newCompatibleTransport(),
                         new AndroidJsonFactory(), null)
                         .setRootUrl("http://10.0.2.2:8080/_ah/api/")
@@ -192,6 +196,7 @@ public class ManageBrokerActivity extends ActionBarActivity {
                                 abstractGoogleClientRequest.setDisableGZipContent(true);
                             }
                         });*/
+                //Online (cloud)
                 BrokerModelApi.Builder builder = new BrokerModelApi.Builder(AndroidHttp.newCompatibleTransport(),
                         new AndroidJsonFactory(), null)
                         .setRootUrl("https://stockexchange-hesso.appspot.com/_ah/api/");
@@ -228,20 +233,5 @@ public class ManageBrokerActivity extends ActionBarActivity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_manage_broker, menu);
         return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 }
